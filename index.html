@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Mis Finanzas">
 <meta name="theme-color" content="#0f172a">
-<meta name="version" content="1.5.0">
+<meta name="version" content="1.5.2">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
 <title>Mis Finanzas</title>
@@ -443,8 +443,8 @@ html, body { height: 100%; overflow: hidden; background: var(--bg0); font-family
   <div class="frow">
     <div class="field">
       <label>Monto</label>
-      <input type="text" id="f-amt" placeholder="1234,56" inputmode="numeric" pattern="[0-9.,]*" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-      <div style="font-size:11px;color:var(--text2);margin-top:4px">Usá coma o punto para centavos</div>
+      <input type="text" id="f-amt" placeholder="0.00" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" style="font-size:20px;font-weight:600;letter-spacing:-.01em">
+      <div style="font-size:11px;color:var(--text2);margin-top:4px">El teclado muestra coma o punto según tu iPhone</div>
     </div>
     <div class="field">
       <label>Moneda</label>
@@ -1504,7 +1504,7 @@ function checkNowAndNotify() {
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 // ── Control de versión — evita que el caché muestre versiones viejas ──
-const APP_VERSION = '1.5.0';
+const APP_VERSION = '1.5.2';
 const storedVersion = localStorage.getItem('mf_version');
 if (storedVersion && storedVersion !== APP_VERSION) {
   // Hay una versión nueva — limpiar caché del service worker y recargar
