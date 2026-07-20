@@ -7,31 +7,34 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Mis Finanzas">
 <meta name="theme-color" content="#0f172a">
-<meta name="version" content="1.6.0">
+<meta name="version" content="1.5.2">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
 <title>Mis Finanzas</title>
 <style>
 :root {
-  --bg0: #0f172a;
-  --bg1: #1e293b;
-  --bg2: #263548;
-  --bg3: #2d3f55;
-  --accent: #38bdf8;
-  --accent2: #0ea5e9;
-  --green: #4ade80;
-  --green-dim: #166534;
-  --red: #f87171;
-  --red-dim: #7f1d1d;
+  /* ── Nueva paleta: violet premium (Nubank-style para LATAM) ── */
+  --bg0: #08091a;
+  --bg1: #10112b;
+  --bg2: #181934;
+  --bg3: #1f2040;
+  --accent: #a78bfa;
+  --accent2: #7c3aed;
+  --accent-glow: rgba(167,139,250,0.18);
+  --accent-rgb: 167,139,250;
+  --green: #34d399;
+  --green-dim: #064e3b;
+  --red: #fb7185;
+  --red-dim: #881337;
   --amber: #fbbf24;
   --amber-dim: #78350f;
-  --text0: #f1f5f9;
+  --text0: #f8fafc;
   --text1: #94a3b8;
-  --text2: #64748b;
-  --border: rgba(148,163,184,0.12);
-  --border2: rgba(148,163,184,0.22);
-  --radius: 12px;
-  --radius-lg: 18px;
+  --text2: #475569;
+  --border: rgba(167,139,250,0.1);
+  --border2: rgba(167,139,250,0.2);
+  --radius: 14px;
+  --radius-lg: 22px;
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bot: env(safe-area-inset-bottom, 0px);
 }
@@ -46,27 +49,42 @@ html, body { height: 100%; overflow: hidden; background: var(--bg0); font-family
 .screen.active { display: block; }
 
 /* ── NAV BAR ── */
-.nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 430px; background: rgba(15,23,42,0.96); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 0.5px solid var(--border); padding-bottom: var(--safe-bot); display: flex; z-index: 100; }
-.nb { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 10px 6px 8px; border: none; background: none; cursor: pointer; font-size: 10px; color: var(--text2); font-family: inherit; transition: color .15s; letter-spacing: .02em; }
+.nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 430px; background: rgba(8,9,26,0.95); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border-top: 0.5px solid var(--border); padding-bottom: var(--safe-bot); display: flex; z-index: 100; }
+.nb { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 10px 4px 8px; border: none; background: none; cursor: pointer; font-size: 9.5px; color: var(--text2); font-family: inherit; transition: color .2s; letter-spacing: .02em; }
 .nb.on { color: var(--accent); }
 .nb svg { width: 22px; height: 22px; stroke-width: 1.8; }
+
+/* FAB – botón flotante de registro rápido */
+.fab { position: fixed; bottom: calc(62px + var(--safe-bot) + 12px); right: 20px; left: 50%; transform: translateX(calc(430px/2 - 68px)); width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent2)); border: none; cursor: pointer; z-index: 101; box-shadow: 0 4px 24px rgba(var(--accent-rgb),.45); display: flex; align-items: center; justify-content: center; font-size: 28px; line-height: 1; transition: transform .15s, box-shadow .15s; -webkit-tap-highlight-color: transparent; }
+.fab:active { transform: translateX(calc(430px/2 - 68px)) scale(.92); box-shadow: 0 2px 12px rgba(var(--accent-rgb),.3); }
 
 /* ── HEADER ── */
 .hdr { padding: 16px 0 12px; }
 .hdr-row { display: flex; justify-content: space-between; align-items: center; }
-.hdr h2 { font-size: 22px; font-weight: 700; letter-spacing: -.02em; }
+.hdr h2 { font-size: 24px; font-weight: 800; letter-spacing: -.03em; }
 .hdr .sub { font-size: 13px; color: var(--text1); margin-top: 2px; }
 .btn-icon { width: 36px; height: 36px; border-radius: 10px; background: var(--bg2); border: 0.5px solid var(--border2); display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text0); transition: background .15s; }
 .btn-icon:active { background: var(--bg3); }
 .btn-icon svg { width: 18px; height: 18px; }
-.btn-pill { padding: 8px 16px; border-radius: 20px; background: var(--accent); color: #0f172a; border: none; font-size: 13px; font-weight: 700; cursor: pointer; font-family: inherit; transition: opacity .15s; }
+.btn-pill { padding: 8px 16px; border-radius: 20px; background: var(--accent); color: #08091a; border: none; font-size: 13px; font-weight: 700; cursor: pointer; font-family: inherit; transition: opacity .15s; }
 .btn-pill:active { opacity: .8; }
 .cur-toggle { display: flex; background: var(--bg2); border-radius: 8px; padding: 2px; gap: 2px; }
 .cur-btn { padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; border: none; background: none; color: var(--text1); cursor: pointer; font-family: inherit; transition: all .15s; }
-.cur-btn.on { background: var(--accent); color: #0f172a; }
+.cur-btn.on { background: var(--accent); color: #08091a; }
 
 /* ── CARDS ── */
 .card { background: var(--bg1); border-radius: var(--radius-lg); border: 0.5px solid var(--border); margin-bottom: 12px; overflow: hidden; }
+
+/* Hero card: número del día */
+.hero-card { background: linear-gradient(145deg, #1a0d3a 0%, #12103a 60%, #0d1a3a 100%); border: 0.5px solid rgba(var(--accent-rgb),.25); padding: 22px 20px 18px; border-radius: var(--radius-lg); margin-bottom: 12px; position: relative; overflow: hidden; }
+.hero-card::before { content:''; position:absolute; inset:0; background: radial-gradient(ellipse at 80% 20%, rgba(var(--accent-rgb),.12) 0%, transparent 65%); pointer-events:none; }
+.hero-tag { font-size: 11px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 8px; display:flex; align-items:center; gap:5px; }
+.hero-number { font-size: 44px; font-weight: 900; letter-spacing: -.04em; color: var(--text0); line-height: 1; margin-bottom: 4px; }
+.hero-sub { font-size: 13px; color: var(--text1); margin-top: 4px; }
+.hero-bar { height: 4px; background: rgba(255,255,255,.1); border-radius: 2px; overflow:hidden; margin-top:14px; }
+.hero-bar-fill { height:100%; border-radius:2px; background: linear-gradient(90deg, var(--green), var(--accent)); transition: width .8s cubic-bezier(.4,0,.2,1); }
+.hero-meta { display:flex; justify-content:space-between; margin-top:6px; font-size:12px; color:var(--text1); }
+
 .balance-card { background: linear-gradient(135deg, #1e3a5f 0%, #1e293b 100%); border-color: rgba(56,189,248,0.2); padding: 22px 20px; }
 .balance-label { font-size: 12px; font-weight: 500; color: var(--text1); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 6px; }
 .balance-val { font-size: 38px; font-weight: 800; letter-spacing: -.03em; color: var(--text0); line-height: 1; }
@@ -79,10 +97,84 @@ html, body { height: 100%; overflow: hidden; background: var(--bg0); font-family
 .mini-val.exp { color: var(--red); }
 .section-title { font-size: 11px; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: .08em; margin: 18px 0 10px; }
 
+/* ── STREAK BADGE ── */
+.streak-row { display:flex; gap:8px; margin-bottom:4px; }
+.streak-chip { display:inline-flex; align-items:center; gap:5px; background:rgba(var(--accent-rgb),.1); border:0.5px solid rgba(var(--accent-rgb),.25); border-radius:20px; padding:5px 12px; font-size:12px; font-weight:700; color:var(--accent); }
+
+/* ── MICRO-ANIMATIONS ── */
+@keyframes slideUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+@keyframes pulse-green { 0%,100% { box-shadow:0 0 0 0 rgba(52,211,153,0); } 50% { box-shadow:0 0 0 12px rgba(52,211,153,0); } }
+@keyframes pulse-red   { 0%,100% { box-shadow:0 0 0 0 rgba(251,113,133,0); } 50% { box-shadow:0 0 0 12px rgba(251,113,133,0); } }
+@keyframes zoomIn { from { opacity:0; transform:scale(.8); } to { opacity:1; transform:scale(1); } }
+.slide-up { animation: slideUp .3s ease both; }
+.tx-item { animation: slideUp .25s ease both; }
+
+/* ── TOAST ── */
+.toast { position:fixed; top:calc(var(--safe-top) + 14px); left:50%; transform:translateX(-50%) translateY(-80px); background:#1a1a40; border:0.5px solid var(--border2); border-radius:20px; padding:11px 20px; font-size:13px; font-weight:600; color:var(--text0); z-index:700; transition:transform .35s cubic-bezier(.175,.885,.32,1.275); white-space:nowrap; box-shadow:0 8px 32px rgba(0,0,0,.4); pointer-events:none; display:flex; align-items:center; gap:8px; }
+.toast.show { transform:translateX(-50%) translateY(0); }
+
+/* ── QUICK-ADD OVERLAY ── */
+.qa-overlay { display:none; position:fixed; inset:0; background:rgba(8,9,26,.9); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); z-index:400; flex-direction:column; align-items:center; justify-content:flex-end; padding:0 20px; }
+.qa-overlay.open { display:flex; }
+.qa-panel { background:var(--bg1); border-radius:28px 28px 0 0; padding:24px 20px calc(20px + var(--safe-bot)); width:100%; max-width:430px; }
+.qa-amount { font-size:52px; font-weight:900; letter-spacing:-.04em; text-align:center; color:var(--text0); margin:8px 0 20px; min-height:64px; line-height:1; }
+.qa-amount.placeholder { color:var(--text2); }
+.qa-cats { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:20px; }
+.qa-cat { display:flex; flex-direction:column; align-items:center; gap:4px; background:var(--bg2); border-radius:16px; border:0.5px solid var(--border); padding:12px 6px 10px; cursor:pointer; transition:all .15s; -webkit-tap-highlight-color:transparent; }
+.qa-cat.sel { background:rgba(var(--accent-rgb),.15); border-color:var(--accent); }
+.qa-cat .qa-icon { font-size:24px; }
+.qa-cat .qa-name { font-size:10px; font-weight:600; color:var(--text1); text-align:center; line-height:1.2; }
+.qa-numpad { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:16px; }
+.qa-key { background:var(--bg2); border:none; border-radius:16px; padding:16px; font-size:20px; font-weight:600; color:var(--text0); cursor:pointer; font-family:inherit; -webkit-tap-highlight-color:transparent; transition:background .1s; }
+.qa-key:active { background:var(--bg3); }
+.qa-key.del { font-size:16px; color:var(--text1); }
+.qa-key.zero { grid-column:span 2; }
+.qa-confirm { width:100%; padding:16px; background:linear-gradient(135deg,var(--accent),var(--accent2)); border:none; border-radius:18px; font-size:16px; font-weight:800; color:#08091a; cursor:pointer; font-family:inherit; letter-spacing:-.01em; }
+.qa-confirm:active { opacity:.85; }
+.qa-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:4px; }
+.qa-title { font-size:16px; font-weight:700; }
+.qa-close { width:32px; height:32px; border-radius:50%; background:var(--bg3); border:none; cursor:pointer; font-size:18px; color:var(--text1); display:flex; align-items:center; justify-content:center; }
+
+/* ── ONBOARDING ── */
+.ob-overlay { display:none; position:fixed; inset:0; background:var(--bg0); z-index:800; flex-direction:column; align-items:center; justify-content:center; padding:32px 24px; }
+.ob-overlay.open { display:flex; }
+.ob-logo { font-size:56px; margin-bottom:12px; }
+.ob-slides { width:100%; max-width:380px; overflow:hidden; }
+.ob-track { display:flex; transition:transform .4s cubic-bezier(.4,0,.2,1); }
+.ob-slide { min-width:100%; display:flex; flex-direction:column; }
+.ob-step-title { font-size:26px; font-weight:900; letter-spacing:-.03em; margin-bottom:8px; }
+.ob-step-sub { font-size:15px; color:var(--text1); line-height:1.6; margin-bottom:28px; }
+.ob-dots { display:flex; gap:6px; justify-content:center; margin:20px 0; }
+.ob-dot { width:6px; height:6px; border-radius:3px; background:var(--bg3); transition:all .3s; }
+.ob-dot.on { width:24px; background:var(--accent); }
+.ob-btn { width:100%; padding:16px; background:linear-gradient(135deg,var(--accent),var(--accent2)); border:none; border-radius:18px; font-size:16px; font-weight:800; color:#08091a; cursor:pointer; font-family:inherit; margin-top:8px; }
+.ob-skip { background:none; border:none; color:var(--text2); font-size:13px; cursor:pointer; font-family:inherit; padding:12px; margin-top:4px; }
+.ob-field { width:100%; padding:16px 18px; background:var(--bg2); border:0.5px solid var(--border2); border-radius:16px; font-size:28px; font-weight:800; color:var(--text0); font-family:inherit; outline:none; letter-spacing:-.02em; margin-bottom:8px; -webkit-appearance:none; }
+.ob-field:focus { border-color:var(--accent); }
+.ob-field::placeholder { color:var(--text2); font-size:24px; font-weight:500; }
+
+/* ── WEEKLY WRAPPED ── */
+.wrapped-overlay { display:none; position:fixed; inset:0; background:rgba(8,9,26,.92); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); z-index:600; flex-direction:column; align-items:center; justify-content:flex-end; }
+.wrapped-overlay.open { display:flex; }
+.wrapped-panel { background:var(--bg1); border-radius:28px 28px 0 0; padding:28px 24px calc(28px + var(--safe-bot)); width:100%; max-width:430px; min-height:65vh; display:flex; flex-direction:column; }
+.wrapped-slides { flex:1; overflow:hidden; position:relative; }
+.wrapped-track { display:flex; height:100%; transition:transform .35s cubic-bezier(.4,0,.2,1); }
+.wrapped-slide { min-width:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:20px 0; }
+.wrapped-emoji { font-size:64px; margin-bottom:16px; animation:zoomIn .4s ease; }
+.wrapped-title { font-size:22px; font-weight:900; letter-spacing:-.03em; margin-bottom:8px; }
+.wrapped-val { font-size:38px; font-weight:900; letter-spacing:-.04em; color:var(--accent); margin:8px 0; }
+.wrapped-desc { font-size:14px; color:var(--text1); line-height:1.65; max-width:300px; }
+.wrapped-dots { display:flex; gap:6px; justify-content:center; margin:20px 0 16px; }
+.wrapped-dot { width:6px; height:6px; border-radius:3px; background:var(--bg3); transition:all .3s; }
+.wrapped-dot.on { width:24px; background:var(--accent); }
+.wrapped-actions { display:flex; gap:10px; }
+.wrapped-next { flex:1; padding:14px; background:linear-gradient(135deg,var(--accent),var(--accent2)); border:none; border-radius:16px; font-size:15px; font-weight:800; color:#08091a; cursor:pointer; font-family:inherit; }
+.wrapped-skip { flex:1; padding:14px; background:var(--bg2); border:0.5px solid var(--border2); border-radius:16px; font-size:14px; font-weight:600; color:var(--text1); cursor:pointer; font-family:inherit; }
+
 /* ── ALERTS ── */
 .alert { border-radius: var(--radius); padding: 12px 14px; margin-bottom: 10px; display: flex; align-items: flex-start; gap: 10px; font-size: 13px; line-height: 1.5; }
-.alert.warn { background: rgba(251,191,36,.1); border: 0.5px solid rgba(251,191,36,.25); color: var(--amber); }
-.alert.danger { background: rgba(248,113,113,.1); border: 0.5px solid rgba(248,113,113,.25); color: var(--red); }
+.alert.warn   { background: rgba(251,191,36,.08); border: 0.5px solid rgba(251,191,36,.22); color: var(--amber); }
+.alert.danger { background: rgba(251,113,133,.08); border: 0.5px solid rgba(251,113,133,.22); color: var(--red); }
 .alert-icon { flex-shrink: 0; font-size: 16px; }
 .alert strong { display: block; margin-bottom: 2px; }
 
@@ -142,39 +234,6 @@ html, body { height: 100%; overflow: hidden; background: var(--bg0); font-family
 .goal-fill { height: 100%; border-radius: 4px; background: var(--accent); transition: width .5s; }
 .goal-detail { font-size: 12px; color: var(--text2); }
 
-/* ── CUOTAS / COMPRAS ── */
-.compra-card { padding: 16px; border-bottom: 0.5px solid var(--border); cursor: pointer; transition: background .15s; }
-.compra-card:last-child { border-bottom: none; }
-.compra-card:active { background: var(--bg2); }
-.compra-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; gap: 10px; }
-.compra-title { font-size: 15px; font-weight: 600; }
-.compra-sub { font-size: 12px; color: var(--text1); margin-top: 3px; }
-.compra-badge { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 20px; white-space: nowrap; text-transform: uppercase; letter-spacing: .04em; }
-.compra-badge.activa { background: rgba(56,189,248,.12); color: var(--accent); }
-.compra-badge.finalizada { background: rgba(74,222,128,.12); color: var(--green); }
-.compra-badge.urgente { background: rgba(248,113,113,.12); color: var(--red); }
-.compra-meta-row { display: flex; justify-content: space-between; font-size: 12px; color: var(--text1); margin-bottom: 8px; }
-.compra-meta-row strong { color: var(--text0); }
-.compra-next { font-size: 12px; color: var(--text2); margin-top: 6px; }
-.stat-pill-row { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
-.stat-pill { flex: 1; min-width: 100px; background: var(--bg1); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 12px 14px; text-align: center; }
-.stat-pill .n { font-size: 20px; font-weight: 800; color: var(--accent); letter-spacing: -.02em; }
-.stat-pill .l { font-size: 11px; color: var(--text2); margin-top: 2px; text-transform: uppercase; letter-spacing: .04em; }
-.cuota-row { display: flex; align-items: center; justify-content: space-between; padding: 11px 0; border-bottom: 0.5px solid var(--border); cursor: pointer; }
-.cuota-row:last-child { border-bottom: none; }
-.cuota-row-left { display: flex; align-items: center; gap: 10px; }
-.cuota-check { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--border2); display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; transition: all .15s; }
-.cuota-check.on { background: var(--green); border-color: var(--green); color: #0f172a; }
-.cuota-check.due { border-color: var(--amber); color: var(--amber); }
-.cuota-num { font-size: 13px; font-weight: 600; }
-.cuota-venc { font-size: 11px; color: var(--text2); }
-.cuota-amt { font-size: 13px; font-weight: 700; }
-.result-box { background: var(--bg2); border-radius: var(--radius); padding: 14px; font-size: 13px; line-height: 1.7; color: var(--text1); }
-.result-box strong { color: var(--text0); }
-.check-field { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
-.check-field input { width: 18px; height: 18px; }
-.check-field label { font-size: 13px; color: var(--text1); text-transform: none; letter-spacing: 0; margin: 0; }
-
 /* ── ANALYSIS ── */
 .chart-wrap { position: relative; height: 220px; margin: 4px 0 16px; }
 .cat-legend { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
@@ -225,9 +284,9 @@ html, body { height: 100%; overflow: hidden; background: var(--bg0); font-family
 .frow { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .btn-row { display: flex; gap: 10px; margin-top: 20px; }
 .btn-cancel { flex: 1; padding: 14px; background: var(--bg2); border: 0.5px solid var(--border2); border-radius: var(--radius); font-size: 15px; font-weight: 600; color: var(--text0); cursor: pointer; font-family: inherit; }
-.btn-save { flex: 2; padding: 14px; background: var(--accent); border: none; border-radius: var(--radius); font-size: 15px; font-weight: 700; color: #0f172a; cursor: pointer; font-family: inherit; }
+.btn-save { flex: 2; padding: 14px; background: linear-gradient(135deg, var(--accent), var(--accent2)); border: none; border-radius: var(--radius); font-size: 15px; font-weight: 700; color: #08091a; cursor: pointer; font-family: inherit; }
 .btn-save:active { opacity: .85; }
-.btn-danger { flex: 1; padding: 14px; background: rgba(248,113,113,.15); border: 0.5px solid rgba(248,113,113,.3); border-radius: var(--radius); font-size: 15px; font-weight: 600; color: var(--red); cursor: pointer; font-family: inherit; }
+.btn-danger { flex: 1; padding: 14px; background: rgba(251,113,133,.12); border: 0.5px solid rgba(251,113,133,.28); border-radius: var(--radius); font-size: 15px; font-weight: 600; color: var(--red); cursor: pointer; font-family: inherit; }
 
 /* ── EMPTY STATE ── */
 .empty { text-align: center; padding: 56px 24px 32px; }
@@ -285,9 +344,143 @@ html, body { height: 100%; overflow: hidden; background: var(--bg0); font-family
 .notif-stripe.good { background: linear-gradient(90deg, var(--green), #22c55e); }
 .notif-stripe.warn { background: linear-gradient(90deg, var(--red), #ef4444); }
 .notif-stripe.tip  { background: linear-gradient(90deg, var(--amber), #f59e0b); }
+
+/* ── CUOTAS MODULE ── */
+.quad-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 6px; }
+.quad-card { background: var(--bg1); border-radius: var(--radius); border: 0.5px solid var(--border); padding: 14px; }
+.quad-label { font-size: 11px; color: var(--text2); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; font-weight: 600; display: flex; align-items: center; gap: 5px; }
+.quad-val { font-size: 20px; font-weight: 800; letter-spacing: -.02em; }
+.quad-val.danger { color: var(--red); }
+.quad-val.accent { color: var(--accent); }
+
+.cuota-card { background: var(--bg1); border-radius: var(--radius-lg); border: 0.5px solid var(--border); margin-bottom: 10px; padding: 15px 16px; cursor: pointer; transition: background .15s; }
+.cuota-card:active { background: var(--bg2); }
+.cuota-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+.cuota-merchant { font-size: 15px; font-weight: 700; letter-spacing: -.01em; }
+.cuota-bank { font-size: 12px; color: var(--text1); margin-top: 2px; display: flex; align-items: center; gap: 4px; }
+.cuota-state { font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: 20px; text-transform: uppercase; letter-spacing: .04em; flex-shrink: 0; }
+.cuota-state.activa { background: rgba(56,189,248,.12); color: var(--accent); }
+.cuota-state.finalizada { background: rgba(74,222,128,.12); color: var(--green); }
+.cuota-state.vencida { background: rgba(248,113,113,.12); color: var(--red); }
+.cuota-mid { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+.cuota-amount { font-size: 18px; font-weight: 700; }
+.cuota-count { font-size: 12px; color: var(--text1); }
+.cuota-bar { height: 6px; background: var(--bg3); border-radius: 3px; overflow: hidden; margin-bottom: 8px; }
+.cuota-fill { height: 100%; border-radius: 3px; background: var(--accent); transition: width .5s; }
+.cuota-bottom { display: flex; justify-content: space-between; font-size: 11px; color: var(--text2); }
+.cuota-bottom strong { color: var(--text1); }
+
+.badge { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 20px; background: rgba(251,191,36,.12); color: var(--amber); }
+
+.installment-row { display: flex; align-items: center; gap: 12px; padding: 11px 0; border-bottom: 0.5px solid var(--border); }
+.installment-row:last-child { border-bottom: none; }
+.inst-check { width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid var(--border2); display: flex; align-items: center; justify-content: center; flex-shrink: 0; cursor: pointer; font-size: 13px; transition: all .15s; background: var(--bg2); }
+.inst-check.paid { background: var(--green); border-color: var(--green); color: #0f172a; }
+.inst-info { flex: 1; min-width: 0; }
+.inst-num { font-size: 13px; font-weight: 600; }
+.inst-date { font-size: 11px; color: var(--text2); margin-top: 1px; }
+.inst-amt { font-size: 13px; font-weight: 700; flex-shrink: 0; }
+.inst-amt.overdue { color: var(--red); }
+
+.toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; background: var(--bg2); border-radius: var(--radius); border: 0.5px solid var(--border2); margin-bottom: 14px; }
+.toggle-row span { font-size: 13px; font-weight: 600; }
+.switch { width: 42px; height: 24px; border-radius: 14px; background: var(--bg3); position: relative; cursor: pointer; flex-shrink: 0; transition: background .2s; }
+.switch.on { background: var(--accent); }
+.switch::after { content:''; position: absolute; width: 18px; height: 18px; border-radius: 50%; background: #fff; top: 3px; left: 3px; transition: left .2s; }
+.switch.on::after { left: 21px; }
+
+.field-hint { font-size: 11px; color: var(--text2); margin-top: 4px; line-height: 1.4; }
+
+/* Confetti */
+#confetti-layer { position: fixed; inset: 0; pointer-events: none; z-index: 600; overflow: hidden; }
+.confetti-piece { position: absolute; top: -20px; border-radius: 2px; animation: confettiFall linear forwards; }
+@keyframes confettiFall {
+  to { transform: translateY(110vh) rotate(540deg); opacity: .3; }
+}
 </style>
 </head>
 <body>
+
+<!-- ════ ONBOARDING ════ -->
+<div class="ob-overlay" id="ob-overlay">
+  <div class="ob-logo">💜</div>
+  <div class="ob-slides">
+    <div class="ob-track" id="ob-track">
+      <!-- Slide 0: Bienvenida -->
+      <div class="ob-slide">
+        <div class="ob-step-title">Hola, bienvenida a<br>Mis Finanzas</div>
+        <div class="ob-step-sub">Tu compañera para controlar el dinero sin estrés. Tres preguntas y listo.</div>
+        <input class="ob-field" id="ob-nombre" type="text" placeholder="¿Cómo te llamás?" autocomplete="off" autocorrect="off" spellcheck="false" autocapitalize="words">
+      </div>
+      <!-- Slide 1: Ingreso -->
+      <div class="ob-slide">
+        <div class="ob-step-title">¿Cuánto ganás<br>por mes?</div>
+        <div class="ob-step-sub">Usamos esto para calcular cuánto podés gastar cada día y alertarte cuando te pasás.</div>
+        <input class="ob-field" id="ob-ingreso" type="text" inputmode="decimal" placeholder="$ 0" autocomplete="off" autocorrect="off" oninput="fmtObIngreso()">
+      </div>
+      <!-- Slide 2: Meta de ahorro -->
+      <div class="ob-slide">
+        <div class="ob-step-title">¿Cuánto querés<br>ahorrar por mes?</div>
+        <div class="ob-step-sub">Tu meta de ahorro se descuenta del presupuesto disponible. Podés cambiarlo cuando quieras.</div>
+        <input class="ob-field" id="ob-ahorro" type="text" inputmode="decimal" placeholder="$ 0" autocomplete="off" autocorrect="off" oninput="fmtObAhorro()">
+      </div>
+    </div>
+  </div>
+  <div class="ob-dots" id="ob-dots">
+    <div class="ob-dot on"></div><div class="ob-dot"></div><div class="ob-dot"></div>
+  </div>
+  <button class="ob-btn" id="ob-btn" onclick="obNext()">Continuar →</button>
+  <button class="ob-skip" onclick="obSkip()">Omitir por ahora</button>
+</div>
+
+<!-- ════ QUICK-ADD OVERLAY ════ -->
+<div class="qa-overlay" id="qa-overlay" onclick="qaOverlayClick(event)">
+  <div class="qa-panel">
+    <div class="qa-header">
+      <div class="qa-title">Registro rápido</div>
+      <button class="qa-close" onclick="closeQA()">×</button>
+    </div>
+    <div class="qa-amount placeholder" id="qa-display">$ 0</div>
+    <div class="qa-cats" id="qa-cats"></div>
+    <div class="qa-numpad">
+      <button class="qa-key" onclick="qaKey('7')">7</button>
+      <button class="qa-key" onclick="qaKey('8')">8</button>
+      <button class="qa-key" onclick="qaKey('9')">9</button>
+      <button class="qa-key" onclick="qaKey('4')">4</button>
+      <button class="qa-key" onclick="qaKey('5')">5</button>
+      <button class="qa-key" onclick="qaKey('6')">6</button>
+      <button class="qa-key" onclick="qaKey('1')">1</button>
+      <button class="qa-key" onclick="qaKey('2')">2</button>
+      <button class="qa-key" onclick="qaKey('3')">3</button>
+      <button class="qa-key zero" onclick="qaKey('0')">0</button>
+      <button class="qa-key del" onclick="qaKey('del')">⌫</button>
+    </div>
+    <button class="qa-confirm" onclick="qaConfirm()">Registrar gasto ✓</button>
+  </div>
+</div>
+
+<!-- ════ WEEKLY WRAPPED ════ -->
+<div class="wrapped-overlay" id="wrapped-overlay">
+  <div class="wrapped-panel">
+    <div class="wrapped-slides">
+      <div class="wrapped-track" id="wrapped-track">
+        <div class="wrapped-slide" id="ws-0"></div>
+        <div class="wrapped-slide" id="ws-1"></div>
+        <div class="wrapped-slide" id="ws-2"></div>
+        <div class="wrapped-slide" id="ws-3"></div>
+      </div>
+    </div>
+    <div class="wrapped-dots" id="wrapped-dots"></div>
+    <div class="wrapped-actions">
+      <button class="wrapped-skip" onclick="closeWrapped()">Cerrar</button>
+      <button class="wrapped-next" id="wrapped-next-btn" onclick="wrappedNext()">Siguiente →</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
 <div class="app">
   <div class="status-bar"></div>
   <div class="content" id="content">
@@ -308,30 +501,39 @@ html, body { height: 100%; overflow: hidden; background: var(--bg0); font-family
       </div>
 
       <div id="install-banner"></div>
-      <div id="d-alerts"></div>
 
-      <div class="balance-card card" style="margin-bottom:12px">
-        <div class="balance-label">Saldo del mes</div>
-        <div class="balance-val" id="d-bal">$ 0</div>
-        <div class="balance-sub" id="d-bal-sub"></div>
+      <div class="streak-row" id="d-streak-row" style="margin-bottom:12px"></div>
+
+      <!-- Número del día -->
+      <div class="hero-card" id="d-hero">
+        <div class="hero-tag">💜 <span id="d-hero-tag">Podés gastar hoy</span></div>
+        <div class="hero-number" id="d-hero-num">$ 0</div>
+        <div class="hero-sub" id="d-hero-sub"></div>
+        <div class="hero-bar"><div class="hero-bar-fill" id="d-hero-fill" style="width:0%"></div></div>
+        <div class="hero-meta">
+          <span id="d-hero-left"></span>
+          <span id="d-hero-right"></span>
+        </div>
       </div>
 
       <div class="mini-grid">
         <div class="mini-card">
-          <div class="mini-label">Ingresos</div>
+          <div class="mini-label">✅ Ingresos</div>
           <div class="mini-val inc" id="d-inc">$ 0</div>
         </div>
         <div class="mini-card">
-          <div class="mini-label">Gastos</div>
+          <div class="mini-label">🔻 Gastos</div>
           <div class="mini-val exp" id="d-exp">$ 0</div>
         </div>
       </div>
 
+      <div id="d-alerts"></div>
+
       <div class="section-title">Medios de pago del mes</div>
       <div class="card" id="d-medios"></div>
 
-      <div class="section-title">Cuotas</div>
-      <div class="card" id="d-cuotas" onclick="document.querySelector('.nb[onclick*=cuotas]').click()" style="cursor:pointer"></div>
+      <div class="section-title">Cuotas en curso</div>
+      <div class="card" id="d-cuotas-teaser" style="cursor:pointer" onclick="goToCuotas()"></div>
 
       <div class="section-title">Presupuesto</div>
       <div class="card" id="d-budgets"></div>
@@ -376,103 +578,6 @@ html, body { height: 100%; overflow: hidden; background: var(--bg0); font-family
       </div>
     </div>
 
-    <!-- ════ CUOTAS ════ -->
-    <div class="screen" id="s-cuotas">
-      <div class="hdr">
-        <div class="hdr-row">
-          <h2>Cuotas</h2>
-          <button class="btn-pill" onclick="openSheet('tx')">+ Nueva</button>
-        </div>
-        <div class="sub">Seguimiento de compras financiadas</div>
-      </div>
-
-      <div class="mini-grid">
-        <div class="mini-card">
-          <div class="mini-label">Este mes pagarás</div>
-          <div class="mini-val exp" id="c-mes-pagar">$ 0</div>
-        </div>
-        <div class="mini-card">
-          <div class="mini-label">Cuotas pendientes</div>
-          <div class="mini-val" id="c-pendientes">0</div>
-        </div>
-        <div class="mini-card">
-          <div class="mini-label">Compras activas</div>
-          <div class="mini-val" id="c-activas">0</div>
-        </div>
-        <div class="mini-card">
-          <div class="mini-label">Última cuota este mes</div>
-          <div class="mini-val" id="c-ultima">0</div>
-        </div>
-      </div>
-
-      <div id="c-alerts"></div>
-
-      <div class="tabs">
-        <button class="tab on" onclick="cTab('list',this)">Compras</button>
-        <button class="tab" onclick="cTab('stats',this)">Estadísticas</button>
-        <button class="tab" onclick="cTab('tools',this)">Herramientas</button>
-      </div>
-
-      <div id="c-list-wrap">
-        <div class="search-wrap">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-          <input class="search-inp" type="search" id="c-q" placeholder="Buscar por comercio, banco o tarjeta..." oninput="renCuotasList()" autocomplete="off" autocorrect="off" spellcheck="false">
-        </div>
-        <div class="filter-row" id="c-filters"></div>
-        <div id="c-list"></div>
-      </div>
-
-      <div id="c-stats-wrap" style="display:none">
-        <div class="section-title">Evolución de deuda en cuotas</div>
-        <div class="chart-wrap" style="height:220px"><canvas id="cuotas-trend-chart"></canvas></div>
-        <div class="section-title">Pagado vs. pendiente</div>
-        <div class="card" id="c-pagado-pendiente"></div>
-        <div class="section-title">Distribución por tarjeta / banco</div>
-        <div class="chart-wrap"><canvas id="cuotas-banco-chart"></canvas></div>
-        <div class="cat-legend" id="cuotas-banco-legend"></div>
-        <div class="section-title">Distribución por rubro</div>
-        <div class="chart-wrap"><canvas id="cuotas-rubro-chart"></canvas></div>
-        <div class="cat-legend" id="cuotas-rubro-legend"></div>
-      </div>
-
-      <div id="c-tools-wrap" style="display:none">
-        <div class="section-title">Indicador de capacidad de endeudamiento</div>
-        <div class="card" id="c-capacidad" style="padding:16px"></div>
-
-        <div class="section-title">Simulador de nueva compra</div>
-        <div class="card" style="padding:16px">
-          <div class="frow">
-            <div class="field">
-              <label>Monto total</label>
-              <input type="text" id="sim-monto" placeholder="0" inputmode="decimal" autocomplete="off">
-            </div>
-            <div class="field">
-              <label>Cuotas</label>
-              <input type="text" id="sim-cuotas" placeholder="12" inputmode="numeric" autocomplete="off">
-            </div>
-          </div>
-          <button class="btn-pill" style="width:100%" onclick="runSimulador()">Simular impacto</button>
-          <div id="sim-resultado" style="margin-top:14px"></div>
-        </div>
-
-        <div class="section-title">Contado vs. financiado</div>
-        <div class="card" style="padding:16px">
-          <div class="frow">
-            <div class="field">
-              <label>Precio contado</label>
-              <input type="text" id="cmp-contado" placeholder="0" inputmode="decimal" autocomplete="off">
-            </div>
-            <div class="field">
-              <label>Precio total financiado</label>
-              <input type="text" id="cmp-financiado" placeholder="0" inputmode="decimal" autocomplete="off">
-            </div>
-          </div>
-          <button class="btn-pill" style="width:100%" onclick="runComparador()">Comparar</button>
-          <div id="cmp-resultado" style="margin-top:14px"></div>
-        </div>
-      </div>
-    </div>
-
     <!-- ════ PRESUPUESTO ════ -->
     <div class="screen" id="s-budget">
       <div class="hdr">
@@ -496,9 +601,12 @@ html, body { height: 100%; overflow: hidden; background: var(--bg0); font-family
             <button onclick="chMo(1)">›</button>
           </div>
         </div>
-        <div style="margin-top:10px">
-          <button onclick="checkNowAndNotify()" style="width:100%;padding:10px;border-radius:10px;border:0.5px solid var(--border2);background:var(--bg2);color:var(--text1);font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px">
+        <div style="margin-top:10px;display:flex;flex-direction:column;gap:8px">
+          <button onclick="checkNowAndNotify()" style="width:100%;padding:10px;border-radius:12px;border:0.5px solid var(--border2);background:var(--bg2);color:var(--text1);font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px">
             <span>⚡</span> Comparar ocio y supermercado vs mes anterior
+          </button>
+          <button onclick="requestPushPermission()" id="push-btn" style="width:100%;padding:10px;border-radius:12px;border:0.5px solid rgba(var(--accent-rgb),.3);background:rgba(var(--accent-rgb),.08);color:var(--accent);font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px">
+            <span>🔔</span> Activar recordatorios inteligentes
           </button>
         </div>
       </div>
@@ -523,6 +631,53 @@ html, body { height: 100%; overflow: hidden; background: var(--bg0); font-family
       </div>
     </div>
 
+    <!-- ════ CUOTAS ════ -->
+    <div class="screen" id="s-cuotas">
+      <div class="hdr">
+        <div class="hdr-row">
+          <h2>Cuotas</h2>
+          <button class="btn-pill" onclick="openCompraSheet()">+ Compra</button>
+        </div>
+        <div class="sub">Seguimiento de compras financiadas</div>
+      </div>
+
+      <div id="cu-alerts"></div>
+
+      <div class="quad-grid">
+        <div class="quad-card">
+          <div class="quad-label">📅 Este mes pagarás</div>
+          <div class="quad-val" id="cu-mes-total">$ 0</div>
+        </div>
+        <div class="quad-card">
+          <div class="quad-label">⏳ Cuotas pendientes</div>
+          <div class="quad-val accent" id="cu-pendientes">0</div>
+        </div>
+        <div class="quad-card">
+          <div class="quad-label">🛍️ Compras activas</div>
+          <div class="quad-val" id="cu-activas">0</div>
+        </div>
+        <div class="quad-card">
+          <div class="quad-label">🏁 Terminan este mes</div>
+          <div class="quad-val" id="cu-terminan">0</div>
+        </div>
+      </div>
+
+      <div class="section-title">Comprometido próximos meses</div>
+      <div class="chart-wrap" style="height:180px"><canvas id="chart-evolucion"></canvas></div>
+
+      <div class="section-title">Distribución por banco / tarjeta</div>
+      <div class="chart-wrap" style="height:200px"><canvas id="chart-banco"></canvas></div>
+      <div class="cat-legend" id="cu-banco-legend"></div>
+
+      <div class="section-title">Tus compras en cuotas</div>
+      <div class="search-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input class="search-inp" type="search" id="cu-q" placeholder="Buscar comercio o banco..." oninput="renCuotas()" autocomplete="off" autocorrect="off" spellcheck="false">
+      </div>
+      <div class="filter-row" id="cu-filters"></div>
+      <div id="cuotas-list"></div>
+    </div>
+
     <!-- ════ METAS ════ -->
     <div class="screen" id="s-goals">
       <div class="hdr">
@@ -536,6 +691,9 @@ html, body { height: 100%; overflow: hidden; background: var(--bg0); font-family
 
   </div><!-- /content -->
 
+  <!-- FAB: Registro rápido -->
+  <button class="fab" onclick="openQA()" aria-label="Registrar gasto rápido">＋</button>
+
   <!-- ════ BOTTOM NAV ════ -->
   <div class="nav">
     <button class="nb on" onclick="sw('home',this)">
@@ -547,7 +705,7 @@ html, body { height: 100%; overflow: hidden; background: var(--bg0); font-family
       Gastos
     </button>
     <button class="nb" onclick="sw('cuotas',this)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="5" width="20" height="14" rx="2.5"/><path d="M2 10h20"/><path d="M6 15h4"/></svg>
       Cuotas
     </button>
     <button class="nb" onclick="sw('budget',this)">
@@ -603,16 +761,16 @@ html, body { height: 100%; overflow: hidden; background: var(--bg0); font-family
       <label>Categoría</label>
       <select id="f-cat">
         <option>Supermercado</option>
+        <option>Gastos limpieza</option>
         <option>Transporte</option>
         <option>Combustible</option>
         <option>Servicios</option>
         <option>Salud</option>
-        <option>Ocio</option>
+        <option>Netflix y otros</option>
         <option>Alquiler</option>
-        <option>Gastos hijos</option>
-        <option>Gastos casa</option>
         <option>Delivery</option>
-        <option>Mascotas</option>
+        <option>Gastos Hormiga</option>
+        <option>Gastos Mascotas</option>
         <option>Ahorro</option>
         <option>Ingreso</option>
         <option>Otro</option>
@@ -631,48 +789,44 @@ html, body { height: 100%; overflow: hidden; background: var(--bg0); font-family
   </div>
 
   <div id="cuotas-section" style="display:none">
-    <div class="frow">
-      <div class="field">
-        <label>Compra en cuotas</label>
-        <select id="f-cuotas-tipo">
-          <option value="Tarjeta de crédito">💳 Tarjeta de crédito</option>
-          <option value="MercadoCredito">🔵 MercadoCrédito</option>
-          <option value="GoCuotas">🟣 Go Cuotas</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Banco / Tarjeta</label>
-        <input type="text" id="f-cuota-banco" placeholder="Ej: Visa Galicia" autocomplete="off">
-      </div>
+    <div class="field" style="margin-top:4px">
+      <label>Banco o tarjeta</label>
+      <input type="text" id="f-cuota-banco" placeholder="Ej: Visa Banco Macro" autocomplete="off">
     </div>
     <div class="frow">
       <div class="field">
         <label>Cuota actual</label>
-        <input type="text" id="f-cuota-actual" placeholder="Ej: 1" inputmode="numeric" autocomplete="off" oninput="calcValorCuota()">
+        <input type="text" id="f-cuota-actual" placeholder="1" inputmode="numeric" autocomplete="off" value="1">
       </div>
       <div class="field">
         <label>Total de cuotas</label>
-        <input type="text" id="f-cuota-total" placeholder="Ej: 12" inputmode="numeric" autocomplete="off" oninput="calcValorCuota()">
+        <input type="text" id="f-cuota-total" placeholder="Ej: 12" inputmode="numeric" autocomplete="off" oninput="calcCuotaValor()">
       </div>
-    </div>
-    <div class="field">
-      <label>Monto total de la compra</label>
-      <input type="text" id="f-cuota-monto-total" placeholder="Monto total" inputmode="decimal" autocomplete="off" autocorrect="off" oninput="calcValorCuota()">
     </div>
     <div class="frow">
       <div class="field">
-        <label>Valor de cada cuota</label>
-        <input type="text" id="f-cuota-valor" placeholder="Calculado automáticamente" inputmode="decimal" autocomplete="off" autocorrect="off">
+        <label>Fecha de la compra</label>
+        <input type="date" id="f-cuota-fecha-compra">
       </div>
       <div class="field">
         <label>Primer vencimiento</label>
         <input type="date" id="f-cuota-primer-venc">
       </div>
     </div>
-    <div class="check-field">
-      <input type="checkbox" id="f-cuota-interes">
-      <label for="f-cuota-interes">Esta compra tiene interés</label>
+    <div class="field">
+      <label>Importe total de la compra</label>
+      <input type="text" id="f-cuota-monto-total" placeholder="Monto total" inputmode="decimal" autocomplete="off" autocorrect="off" oninput="calcCuotaValor()">
     </div>
+    <div class="field">
+      <label>Valor de cada cuota</label>
+      <input type="text" id="f-cuota-valor" placeholder="Se calcula automáticamente" inputmode="decimal" autocomplete="off" autocorrect="off">
+      <div class="field-hint">Se calcula solo al completar el importe total y la cantidad de cuotas. Podés editarlo si las cuotas no son iguales.</div>
+    </div>
+    <div class="toggle-row">
+      <span>¿La compra tiene interés?</span>
+      <div class="switch" id="f-cuota-interes-sw" onclick="toggleInteresSw()"></div>
+    </div>
+    <div class="field-hint" style="margin-top:-8px;margin-bottom:14px">Completá banco, vencimiento e importe total para generar el calendario de cuotas en la sección "Cuotas".</div>
   </div>
 
   <div class="field">
@@ -743,6 +897,25 @@ html, body { height: 100%; overflow: hidden; background: var(--bg0); font-family
 </div>
 </div>
 
+<!-- Detalle de compra en cuotas -->
+<div class="sheet-bg" id="sheet-cuota-detail" onclick="sheetBgClick(event,'cuota-detail')">
+<div class="sheet">
+  <div class="sheet-handle"></div>
+  <h3 id="cd-title">Compra en cuotas</h3>
+  <div id="cd-summary" style="margin-bottom:16px"></div>
+  <div class="section-title" style="margin-top:0">Calendario de cuotas</div>
+  <div class="card" id="cd-list" style="margin-bottom:16px"></div>
+  <div class="btn-row">
+    <button class="btn-danger" onclick="confirmDelCompra()">🗑 Eliminar compra</button>
+    <button class="btn-save" style="flex:1" onclick="closeSheet('cuota-detail')">Listo</button>
+  </div>
+  <div style="height:8px"></div>
+</div>
+</div>
+
+<!-- Confetti layer -->
+<div id="confetti-layer"></div>
+
 <!-- Confirmar eliminación -->
 <div class="sheet-bg" id="sheet-del" onclick="sheetBgClick(event,'del')">
 <div class="sheet">
@@ -769,36 +942,6 @@ html, body { height: 100%; overflow: hidden; background: var(--bg0); font-family
       <button class="notif-btn-skip" onclick="closeNotif()">Cerrar</button>
     </div>
   </div>
-</div>
-
-<!-- ════ CONFETTI CANVAS ════ -->
-<canvas id="confetti-canvas" style="position:fixed;inset:0;pointer-events:none;z-index:600;width:100%;height:100%"></canvas>
-
-<!-- ════ CELEBRACIÓN (cuotas) ════ -->
-<div class="notif-overlay" id="celeb-overlay" onclick="celebBgClick(event)">
-  <div class="notif-card" id="celeb-card">
-    <div class="notif-stripe good"></div>
-    <span class="notif-emoji" id="celeb-emoji"></span>
-    <div class="notif-title good" id="celeb-title"></div>
-    <div class="notif-body" id="celeb-body"></div>
-    <div class="notif-actions">
-      <button class="notif-btn-main good" id="celeb-btn" onclick="closeCelebration()"></button>
-    </div>
-  </div>
-</div>
-
-<!-- ════ DETALLE DE COMPRA EN CUOTAS ════ -->
-<div class="sheet-bg" id="sheet-compra" onclick="sheetBgClick(event,'compra')">
-<div class="sheet">
-  <div class="sheet-handle"></div>
-  <h3 id="compra-detail-title">Detalle de compra</h3>
-  <div id="compra-detail-body"></div>
-  <div class="btn-row">
-    <button class="btn-cancel" onclick="closeSheet('compra')">Cerrar</button>
-    <button class="btn-danger" id="compra-del-btn">🗑 Eliminar compra</button>
-  </div>
-  <div style="height:8px"></div>
-</div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
@@ -851,8 +994,8 @@ function saveDB() {
   try { localStorage.setItem(DB_KEY, JSON.stringify({ txs, buds, goals, compras })); } catch(e) {}
 }
 
-let { txs, buds, goals } = loadDB();
-let compras = loadDB().compras || [];
+let { txs, buds, goals, compras } = loadDB();
+if (!compras) compras = [];
 
 // Presupuestos por defecto si no existen
 const DEFAULT_BUDS = { Supermercado:0, Transporte:0, Combustible:0, Servicios:0, Salud:0, Ocio:0, Alquiler:0, 'Gastos hija':0, Ahorro:0 };
@@ -904,109 +1047,6 @@ function getMonthLabel(offset = 0) {
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// CUOTAS — MOTOR DE COMPRAS EN CUOTAS
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-const CUOTAS_MEDIOS = ['Tarjeta de crédito', 'MercadoCredito', 'GoCuotas'];
-
-function addMonths(dateStr, n) {
-  const d = new Date(dateStr + 'T00:00:00');
-  const day = d.getDate();
-  d.setDate(1);
-  d.setMonth(d.getMonth() + n);
-  const lastDay = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
-  d.setDate(Math.min(day, lastDay));
-  return d.toISOString().slice(0, 10);
-}
-
-function genCuotasSchedule({ primerVenc, total, valorCuota, cuotaInicial }) {
-  const arr = [];
-  for (let n = 1; n <= total; n++) {
-    arr.push({
-      n,
-      monto: valorCuota,
-      venc: addMonths(primerVenc, n - 1),
-      pagada: n < cuotaInicial,
-      fechaPago: n < cuotaInicial ? primerVenc : null
-    });
-  }
-  return arr;
-}
-
-function addCompra(data) {
-  const cuotas = genCuotasSchedule({
-    primerVenc: data.primerVenc, total: data.totalCuotas,
-    valorCuota: data.valorCuota, cuotaInicial: data.cuotaInicial || 1
-  });
-  const compra = {
-    id: Date.now() + Math.floor(Math.random()*1000),
-    desc: data.desc, banco: data.banco, cat: data.cat || 'Otro',
-    totalCuotas: data.totalCuotas, fechaCompra: data.fechaCompra,
-    primerVenc: data.primerVenc, importeTotal: data.importeTotal,
-    valorCuota: data.valorCuota, interes: !!data.interes, c: data.c || 'ARS',
-    cuotas, createdAt: Date.now()
-  };
-  compras.push(compra);
-  saveDB();
-  return compra;
-}
-
-function getCompra(id) { return compras.find(c => c.id === id); }
-
-function compraProgress(compra) {
-  const pagadas = compra.cuotas.filter(c => c.pagada).length;
-  const restantes = compra.totalCuotas - pagadas;
-  const pct = compra.totalCuotas ? Math.round(pagadas / compra.totalCuotas * 100) : 0;
-  return { pagadas, restantes, pct };
-}
-
-function compraActiva(compra) { return compra.cuotas.some(c => !c.pagada); }
-
-function proximoVenc(compra) {
-  const pend = compra.cuotas.filter(c => !c.pagada).sort((a,b) => a.venc.localeCompare(b.venc));
-  return pend.length ? pend[0] : null;
-}
-
-function cuotasDelMes(offset = 0) {
-  const prefix = getMonthPrefix(offset);
-  const out = [];
-  compras.forEach(compra => {
-    compra.cuotas.forEach(c => {
-      if (c.venc.startsWith(prefix)) out.push({ compra, cuota: c });
-    });
-  });
-  return out;
-}
-
-function toggleCuotaPagada(compraId, n) {
-  const compra = getCompra(compraId); if (!compra) return;
-  const cuota = compra.cuotas.find(c => c.n === n); if (!cuota) return;
-  const wasPagada = cuota.pagada;
-  cuota.pagada = !wasPagada;
-  cuota.fechaPago = cuota.pagada ? new Date().toISOString().slice(0,10) : null;
-  saveDB();
-
-  if (cuota.pagada && !wasPagada) {
-    const { restantes } = compraProgress(compra);
-    if (restantes === 0) {
-      launchConfetti();
-      showCelebration({
-        emoji: '🎉', title: '¡Felicitaciones!',
-        body: `Terminaste de pagar tu compra de <strong>${escHtml(compra.desc)}</strong>.<br><br>Ya no vas a tener más cuotas de este producto. ${disp(compra.importeTotal)} completamente saldados.`,
-        btnLabel: 'Genial 🙌'
-      });
-    } else if (restantes === Math.ceil(compra.totalCuotas / 2) && compra.totalCuotas >= 4) {
-      launchConfetti(60);
-      showCelebration({
-        emoji: '🏆', title: '¡Excelente!',
-        body: `Acabás de liberar una cuota de <strong>${escHtml(compra.desc)}</strong>.<br><br>Vas por la mitad del camino. Cada paso te acerca a una economía más saludable.`,
-        btnLabel: 'Seguir así 💪'
-      });
-    }
-  }
-  renCuotas();
-}
-
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // INSTALL BANNER (iOS)
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 function showInstallBanner() {
@@ -1031,12 +1071,8 @@ function renDash() {
   const arr = getMoTxs(0);
   const { inc, exp, bal } = totals(arr);
 
-  document.getElementById('d-bal').textContent = disp(bal);
   document.getElementById('d-inc').textContent = disp(inc);
   document.getElementById('d-exp').textContent = disp(exp);
-  document.getElementById('d-bal-sub').textContent = VIEW_CUR === 'ARS'
-    ? '≈ u$s ' + Math.round(bal / RATE).toLocaleString('es-AR')
-    : '≈ $ ' + Math.round(bal).toLocaleString('es-AR') + ' ARS';
 
   // Medios de pago del mes
   const MEDIOS_ICONS = { 'Tarjeta de crédito':'💳', 'Débito':'🏦', 'Efectivo':'💵', 'Transferencia':'📲', 'MercadoPago':'📱', 'MercadoCredito':'🔵', 'GoCuotas':'🟣' };
@@ -1073,17 +1109,21 @@ function renDash() {
       dm.innerHTML += `<div style="background:rgba(248,113,113,.08);border-top:0.5px solid rgba(248,113,113,.2);padding:10px 16px;font-size:12px;color:var(--red);line-height:1.6">💳 Total comprometido en crédito este mes: <strong>${disp(totalCredito)}</strong> — reservá este monto para los vencimientos.${cuotasResumen}</div>`;
     }
   }
-  // Resumen de cuotas en el dashboard principal
-  const dCuotasEl = document.getElementById('d-cuotas');
-  if (dCuotasEl) {
-    const delMes = cuotasDelMes(0);
-    const pagarEsteMes = delMes.filter(x => !x.cuota.pagada).reduce((s,x) => s + toARS(x.cuota.monto, x.compra.c), 0);
-    const pendientesTotal = compras.reduce((s,c) => s + c.cuotas.filter(cu => !cu.pagada).length, 0);
-    const activasN = compras.filter(compraActiva).length;
+  // Hero card: número del día
+  calcHeroNum();
+  renStreak();
+
+  // Resumen de cuotas (teaser)
+  const dct = document.getElementById('d-cuotas-teaser');
+  if (dct) {
+    const r = cuotasResumen();
     if (!compras.length) {
-      dCuotasEl.innerHTML = `<div style="padding:14px 16px;font-size:13px;color:var(--text2)">Sin compras en cuotas registradas. Tocá para ver el módulo →</div>`;
+      dct.innerHTML = `<div style="padding:14px 16px;font-size:13px;color:var(--text2);display:flex;justify-content:space-between;align-items:center">Sin compras en cuotas registradas <span style="color:var(--accent);font-weight:600">Ver →</span></div>`;
     } else {
-      dCuotasEl.innerHTML = `<div class="tx-item"><div class="tx-emoji" style="background:rgba(56,189,248,.12);font-size:20px">💳</div><div class="tx-info"><div class="tx-name" style="font-weight:600">${activasN} compra${activasN!==1?'s':''} activa${activasN!==1?'s':''}</div><div class="tx-meta">${pendientesTotal} cuota${pendientesTotal!==1?'s':''} pendiente${pendientesTotal!==1?'s':''}</div></div><div class="tx-right"><div class="tx-amount neg" style="font-size:15px">${disp(pagarEsteMes)}</div><div class="tx-meta">este mes</div></div></div>`;
+      dct.innerHTML = `<div style="padding:14px 16px;display:flex;justify-content:space-between;align-items:center">
+        <div><div style="font-size:13px;color:var(--text1)">Pagarás este mes</div><div style="font-size:18px;font-weight:700;margin-top:2px">${disp(r.mesTotal)}</div></div>
+        <div style="text-align:right"><div style="font-size:12px;color:var(--text2)">${r.pendientes} cuotas pendientes</div><div style="font-size:12px;color:var(--accent);font-weight:600;margin-top:2px">${r.activas} compras activas →</div></div>
+      </div>`;
     }
   }
 
@@ -1095,6 +1135,14 @@ function renDash() {
     if (p >= 1) al.innerHTML += `<div class="alert danger"><span class="alert-icon">⚠️</span><div><strong>Límite superado: ${cat}</strong>Gastaste ${disp(sp)} de ${disp(lim)} (${Math.round(p*100)}%). Evitá más gastos en esta categoría.</div></div>`;
     else if (p >= .8) al.innerHTML += `<div class="alert warn"><span class="alert-icon">⚡</span><div><strong>80% alcanzado: ${cat}</strong>Solo te quedan ${disp(lim - sp)} — ${Math.round((1-p)*100)}% del presupuesto.</div></div>`;
   });
+  if (typeof compras !== 'undefined' && compras.length) {
+    const hoy = new Date().toISOString().slice(0,10);
+    const en5 = new Date(); en5.setDate(en5.getDate()+5); const en5ISO = en5.toISOString().slice(0,10);
+    let hoyN = 0, prontoN = 0;
+    compras.forEach(c => c.cuotas.forEach(cu => { if (cu.pagada) return; if (cu.vence === hoy) hoyN++; else if (cu.vence > hoy && cu.vence <= en5ISO) prontoN++; }));
+    if (hoyN) al.innerHTML += `<div class="alert danger"><span class="alert-icon">💳</span><div><strong>Hoy vence${hoyN>1?'n':''} ${hoyN} cuota${hoyN>1?'s':''}</strong>Mirá el detalle en la pestaña Cuotas.</div></div>`;
+    else if (prontoN) al.innerHTML += `<div class="alert warn"><span class="alert-icon">💳</span><div><strong>${prontoN} cuota${prontoN>1?'s':''} vence${prontoN>1?'n':''} esta semana</strong>Revisá la pestaña Cuotas para el detalle.</div></div>`;
+  }
 
   // Presupuesto mini
   const db = document.getElementById('d-budgets'); db.innerHTML = '';
@@ -1144,8 +1192,688 @@ function renDash() {
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// RENDER TRANSACTIONS
+// 🍞 TOAST
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+let toastTimer = null;
+function showToast(msg, duration = 2800) {
+  const t = document.getElementById('toast');
+  if (!t) return;
+  t.innerHTML = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), duration);
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// 📳 HAPTIC (Vibration API)
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function haptic(pattern = [12]) {
+  try { if (navigator.vibrate) navigator.vibrate(pattern); } catch(e) {}
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// 🚀 ONBOARDING
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+let obStep = 0;
+const OB_KEY = 'mf_ob_done';
+
+function initOnboarding() {
+  if (localStorage.getItem(OB_KEY)) return;
+  document.getElementById('ob-overlay').classList.add('open');
+  setTimeout(() => document.getElementById('ob-nombre').focus(), 400);
+}
+
+function obNext() {
+  haptic([10]);
+  if (obStep === 0) {
+    const nombre = document.getElementById('ob-nombre').value.trim();
+    if (nombre) { localStorage.setItem('mf_nombre', nombre); }
+    obStep = 1; obRender();
+    setTimeout(() => document.getElementById('ob-ingreso').focus(), 350);
+  } else if (obStep === 1) {
+    const raw = document.getElementById('ob-ingreso').value;
+    const val = parseAmt(raw);
+    if (val > 0) {
+      // Crear transacción de ingreso si no existe para este mes
+      const d = new Date().toISOString().slice(0,10);
+      const exists = txs.find(t => t.t === 'income' && t.d.startsWith(getMonthPrefix(0)));
+      if (!exists) {
+        txs.unshift({ id: Date.now(), desc: 'Ingreso mensual', amt: val, c: 'ARS', t: 'income', cat: 'Ingreso', medio: 'Transferencia', d });
+        saveDB();
+      }
+    }
+    obStep = 2; obRender();
+    setTimeout(() => document.getElementById('ob-ahorro').focus(), 350);
+  } else {
+    const raw = document.getElementById('ob-ahorro').value;
+    const val = parseAmt(raw);
+    if (val > 0) { buds['Ahorro'] = val; saveDB(); }
+    obFinish();
+  }
+}
+
+function obRender() {
+  document.getElementById('ob-track').style.transform = `translateX(-${obStep * 100}%)`;
+  document.querySelectorAll('.ob-dot').forEach((d, i) => d.classList.toggle('on', i === obStep));
+  const labels = ['Continuar →', 'Continuar →', '¡Listo! Empezar 🚀'];
+  document.getElementById('ob-btn').textContent = labels[obStep];
+}
+
+function fmtObIngreso() {
+  const inp = document.getElementById('ob-ingreso');
+  const v = inp.value.replace(/[^0-9,.]/g,'');
+  inp.value = v ? '$ ' + v : '';
+}
+function fmtObAhorro() {
+  const inp = document.getElementById('ob-ahorro');
+  const v = inp.value.replace(/[^0-9,.]/g,'');
+  inp.value = v ? '$ ' + v : '';
+}
+
+function obSkip() { obFinish(); }
+
+function obFinish() {
+  localStorage.setItem(OB_KEY, '1');
+  document.getElementById('ob-overlay').classList.remove('open');
+  renDash();
+  const nombre = localStorage.getItem('mf_nombre');
+  if (nombre) showToast(`👋 ¡Hola, ${nombre}! Todo configurado.`);
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// 🔢 NÚMERO DEL DÍA + HERO CARD
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function calcHeroNum() {
+  const hoy = new Date();
+  const mo = getMonthPrefix(0);
+  const arr = txs.filter(t => t.d.startsWith(mo));
+  const inc = arr.filter(t => t.t === 'income').reduce((s,t) => s + toARS(t.amt,t.c), 0);
+  const exp = arr.filter(t => t.t === 'expense').reduce((s,t) => s + toARS(t.amt,t.c), 0);
+
+  const diasMes = new Date(hoy.getFullYear(), hoy.getMonth()+1, 0).getDate();
+  const diasRestantes = diasMes - hoy.getDate() + 1;
+  const diasPasados = hoy.getDate();
+
+  const saldo = inc - exp;
+  const porDia = diasRestantes > 0 ? Math.max(0, saldo) / diasRestantes : 0;
+  const pct = inc > 0 ? Math.min((exp / inc) * 100, 100) : 0;
+
+  const tag = document.getElementById('d-hero-tag');
+  const num = document.getElementById('d-hero-num');
+  const sub = document.getElementById('d-hero-sub');
+  const fill = document.getElementById('d-hero-fill');
+  const left = document.getElementById('d-hero-left');
+  const right = document.getElementById('d-hero-right');
+
+  if (!tag) return;
+
+  if (inc === 0) {
+    tag.textContent = 'Registrá tu ingreso para ver el número del día';
+    num.textContent = '—';
+    num.style.color = 'var(--text2)';
+    sub.textContent = 'Tocá + Ingreso o usá el botón ＋';
+    fill.style.width = '0%';
+    left.textContent = ''; right.textContent = '';
+    return;
+  }
+
+  tag.textContent = saldo <= 0 ? '⚠️ Presupuesto agotado' : '💜 Podés gastar hoy';
+  num.textContent = saldo <= 0 ? disp(0) : disp(Math.round(porDia));
+  num.style.color = pct >= 95 ? 'var(--red)' : pct >= 75 ? 'var(--amber)' : 'var(--text0)';
+  sub.textContent = saldo <= 0
+    ? `Gastaste ${disp(Math.round(exp))} y solo entraron ${disp(Math.round(inc))} este mes.`
+    : `Quedan ${diasRestantes} día${diasRestantes!==1?'s':''} — saldo disponible ${disp(Math.round(saldo))}`;
+  fill.style.width = `${100 - pct}%`;
+  fill.style.background = pct >= 95 ? 'linear-gradient(90deg,var(--red),var(--amber))' : pct >= 75 ? 'linear-gradient(90deg,var(--amber),var(--accent))' : 'linear-gradient(90deg,var(--green),var(--accent))';
+  left.textContent = `Gastado: ${Math.round(pct)}%`;
+  right.textContent = `Día ${diasPasados}/${diasMes}`;
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// 🔥 STREAK (racha de registro)
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function calcStreak() {
+  const hoy = new Date();
+  let streak = 0;
+  for (let i = 0; i < 365; i++) {
+    const d = new Date(hoy); d.setDate(d.getDate() - i);
+    const iso = d.toISOString().slice(0,10);
+    if (txs.some(t => t.d === iso)) { streak++; } else if (i > 0) break;
+  }
+  return streak;
+}
+
+function renStreak() {
+  const row = document.getElementById('d-streak-row'); if (!row) return;
+  const nombre = localStorage.getItem('mf_nombre');
+  const streak = calcStreak();
+  const greeting = nombre ? `Hola, ${nombre} 👋` : '👋 ¡Hola!';
+  row.innerHTML = `
+    <div class="streak-chip">${greeting}</div>
+    ${streak >= 2 ? `<div class="streak-chip">🔥 ${streak} días seguidos</div>` : ''}
+  `;
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// ⚡ QUICK-ADD (registro rápido con teclado nativo)
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+const QA_CATS = [
+  { cat:'Supermercado', icon:'🛒' }, { cat:'Transporte', icon:'🚗' },
+  { cat:'Delivery', icon:'🍕' },     { cat:'Combustible', icon:'⛽' },
+  { cat:'Salud', icon:'💊' },        { cat:'Servicios', icon:'💡' },
+  { cat:'Ocio', icon:'🎮' }, { cat:'Otro', icon:'💸' }
+];
+let qaAmount = '', qaCat = 'Otro';
+
+function openQA() {
+  haptic([8]);
+  qaAmount = ''; qaCat = 'Otro';
+  renderQACats();
+  renderQADisplay();
+  document.getElementById('qa-overlay').classList.add('open');
+}
+
+function closeQA() {
+  document.getElementById('qa-overlay').classList.remove('open');
+}
+
+function qaOverlayClick(e) {
+  if (e.target === document.getElementById('qa-overlay')) closeQA();
+}
+
+function renderQACats() {
+  document.getElementById('qa-cats').innerHTML = QA_CATS.map(c =>
+    `<div class="qa-cat${c.cat===qaCat?' sel':''}" onclick="qaSelCat('${c.cat}')">
+      <span class="qa-icon">${c.icon}</span>
+      <span class="qa-name">${c.cat}</span>
+    </div>`
+  ).join('');
+}
+
+function qaSelCat(cat) {
+  haptic([6]);
+  qaCat = cat;
+  renderQACats();
+}
+
+function qaKey(k) {
+  haptic([4]);
+  if (k === 'del') { qaAmount = qaAmount.slice(0,-1); }
+  else if (k === '.' && qaAmount.includes('.')) { return; }
+  else if (qaAmount.length < 10) { qaAmount += k; }
+  renderQADisplay();
+}
+
+function renderQADisplay() {
+  const d = document.getElementById('qa-display');
+  const val = parseFloat(qaAmount) || 0;
+  d.textContent = val > 0 ? '$ ' + val.toLocaleString('es-AR') : '$ 0';
+  d.classList.toggle('placeholder', val === 0);
+}
+
+function qaConfirm() {
+  const amt = parseFloat(qaAmount) || 0;
+  if (amt <= 0) { showToast('⚠️ Ingresá un monto'); return; }
+  haptic([10, 50, 20]);
+  const d = new Date().toISOString().slice(0,10);
+  const cat = qaCat;
+  const icon = QA_CATS.find(c => c.cat === cat)?.icon || '💸';
+  txs.unshift({ id: Date.now(), desc: cat, amt, c: 'ARS', t: 'expense', cat, medio: 'Efectivo', d });
+  saveDB();
+  closeQA();
+  renDash(); renTx(); renBud(); renCuotas();
+  showToast(`${icon} ${disp(amt)} en ${cat} registrado`);
+  checkBudgetAfterTx(cat, amt);
+}
+
+function checkBudgetAfterTx(cat, amt) {
+  const lim = buds[cat];
+  if (!lim) return;
+  const mo = getMonthPrefix(0);
+  const sp = txs.filter(t => t.cat === cat && t.t === 'expense' && t.d.startsWith(mo)).reduce((s,t) => s + toARS(t.amt,t.c), 0);
+  const p = sp / lim;
+  if (p >= 1) showNotif({ type:'warn', emoji:'🚨', title:'¡Límite superado!', body:`Ya gastaste ${disp(sp)} en <strong>${cat}</strong>. Tu límite es ${disp(lim)}.`, btnLabel:'Entendido' });
+  else if (p >= 0.8) setTimeout(() => showToast(`⚠️ ${cat}: ${Math.round(p*100)}% del presupuesto`), 1500);
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// 📊 WEEKLY WRAPPED (resumen semanal del lunes)
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+const WR_KEY = 'mf_wrapped_last';
+let wrSlide = 0, wrTotal = 4;
+
+function checkWrapped() {
+  const hoy = new Date();
+  if (hoy.getDay() !== 1) return; // solo lunes
+  const lunes = hoy.toISOString().slice(0,10);
+  if (localStorage.getItem(WR_KEY) === lunes) return;
+  if (txs.length < 3) return; // necesita datos
+  buildWrapped();
+  document.getElementById('wrapped-overlay').classList.add('open');
+  localStorage.setItem(WR_KEY, lunes);
+}
+
+function buildWrapped() {
+  const mo = getMonthPrefix(0);
+  const prevMo = getMonthPrefix(-1);
+  const arr = txs.filter(t => t.d.startsWith(mo));
+  const prev = txs.filter(t => t.d.startsWith(prevMo));
+  const exp = arr.filter(t => t.t==='expense').reduce((s,t)=>s+toARS(t.amt,t.c),0);
+  const prevExp = prev.filter(t => t.t==='expense').reduce((s,t)=>s+toARS(t.amt,t.c),0);
+
+  const cats = {};
+  arr.filter(t=>t.t==='expense').forEach(t => cats[t.cat]=(cats[t.cat]||0)+toARS(t.amt,t.c));
+  const sorted = Object.entries(cats).sort((a,b)=>b[1]-a[1]);
+  const topCat = sorted[0];
+  const lowCat = sorted[sorted.length-1];
+  const diff = prevExp > 0 ? Math.round(((exp-prevExp)/prevExp)*100) : null;
+
+  const hoyMo = getMonthPrefix(0);
+  let cuotasMes = 0;
+  compras.forEach(c => c.cuotas.forEach(cu => { if (!cu.pagada && cu.vence.startsWith(hoyMo)) cuotasMes += cu.monto; }));
+
+  const slides = [
+    { emoji:'📊', title:'Tu semana financiera', val: disp(Math.round(exp)), desc:`Gastos acumulados en ${MONTHS[new Date().getMonth()]}${diff!==null ? `<br><strong style="color:${diff>0?'var(--red)':'var(--green)'}">${diff>0?'+':''}${diff}% vs ${MONTHS[(new Date().getMonth()-1+12)%12]}</strong>` : ''}` },
+    { emoji: topCat?ICONS[topCat[0]]||'📋':'🤷', title:'Tu categoría más usada', val: topCat?topCat[0]:'—', desc: topCat?`Gastaste ${disp(Math.round(topCat[1]))} aquí. ${topCat[1]/exp>0.4?'Representa más del 40% de tus gastos.':'Proporción razonable.'}`:'' },
+    { emoji:'💜', title:'Comprometido en cuotas', val: disp(Math.round(cuotasMes)), desc: cuotasMes > 0 ? `Este mes pagás ${disp(Math.round(cuotasMes))} en cuotas activas. Chequeá la pestaña Cuotas para el detalle.` : 'Sin cuotas activas este mes. ¡Excelente posición financiera!' },
+    { emoji:'🎯', title:'Proyección de cierre', val: (() => { const hoy=new Date(); const diasMes=new Date(hoy.getFullYear(),hoy.getMonth()+1,0).getDate(); return disp(Math.round(exp/hoy.getDate()*diasMes)); })(), desc:'Basado en tu ritmo actual de gasto este mes. Usá el Simulador de Cuotas para planificar compras grandes.' }
+  ];
+  wrTotal = slides.length;
+  slides.forEach((s,i) => {
+    const el = document.getElementById(`ws-${i}`);
+    if (el) el.innerHTML = `<div class="wrapped-emoji">${s.emoji}</div><div class="wrapped-title">${s.title}</div><div class="wrapped-val">${s.val}</div><div class="wrapped-desc">${s.desc}</div>`;
+  });
+  wrSlide = 0;
+  renderWrappedDots();
+}
+
+function wrappedNext() {
+  haptic([8]);
+  if (wrSlide < wrTotal - 1) {
+    wrSlide++;
+    document.getElementById('wrapped-track').style.transform = `translateX(-${wrSlide * 100}%)`;
+    renderWrappedDots();
+    const btn = document.getElementById('wrapped-next-btn');
+    if (btn) btn.textContent = wrSlide === wrTotal-1 ? 'Cerrar ✓' : 'Siguiente →';
+  } else {
+    closeWrapped();
+  }
+}
+
+function renderWrappedDots() {
+  document.getElementById('wrapped-dots').innerHTML = Array.from({length:wrTotal},(_,i)=>`<div class="wrapped-dot${i===wrSlide?' on':''}"></div>`).join('');
+}
+
+function closeWrapped() {
+  document.getElementById('wrapped-overlay').classList.remove('open');
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// 🔔 NOTIFICACIONES PUSH (Web Push API)
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function requestPushPermission() {
+  if (!('Notification' in window)) {
+    showToast('⚠️ Tu navegador no soporta notificaciones');
+    return;
+  }
+  if (Notification.permission === 'granted') {
+    showToast('✅ Las notificaciones ya están activas');
+    schedulePushReminders();
+    return;
+  }
+  Notification.requestPermission().then(perm => {
+    if (perm === 'granted') {
+      showToast('🔔 ¡Notificaciones activadas!');
+      localStorage.setItem('mf_push', '1');
+      schedulePushReminders();
+      const btn = document.getElementById('push-btn');
+      if (btn) { btn.textContent = '✅ Recordatorios activados'; btn.style.opacity = '.6'; }
+    } else {
+      showToast('🔕 Permisos denegados. Activalos desde la configuración del navegador.');
+    }
+  });
+}
+
+function schedulePushReminders() {
+  // Recordatorio del mediodía (hoy a las 13:00 si aún no pasó)
+  const now = new Date();
+  const lunch = new Date(now); lunch.setHours(13, 0, 0, 0);
+  if (lunch > now) {
+    const msUntilLunch = lunch - now;
+    setTimeout(() => {
+      if (Notification.permission === 'granted') {
+        new Notification('💜 Mis Finanzas', { body: '¿Ya registraste tus gastos de esta mañana? Solo toma un toque. 👆', icon: 'icon-192.png', badge: 'icon-192.png' });
+      }
+    }, msUntilLunch);
+  }
+  // Alerta de cuotas: si hay cuota que vence hoy
+  const hoy = now.toISOString().slice(0,10);
+  const vencenHoy = compras.flatMap(c => c.cuotas.filter(cu => !cu.pagada && cu.vence === hoy));
+  if (vencenHoy.length && Notification.permission === 'granted') {
+    setTimeout(() => {
+      const _nb = 'Hoy vence' + (vencenHoy.length>1?'n':'') + ' ' + vencenHoy.length + ' cuota' + (vencenHoy.length>1?'s':'') + '. Revisá la pestaña Cuotas.';
+      new Notification('💳 Vencimiento de cuota', { body: _nb, icon: 'icon-192.png' });
+    }, 3000);
+  }
+}
+
+function initPushIfGranted() {
+  if (localStorage.getItem('mf_push') === '1' && Notification.permission === 'granted') {
+    schedulePushReminders();
+    const btn = document.getElementById('push-btn');
+    if (btn) { btn.innerHTML = '<span>✅</span> Recordatorios activos'; btn.style.opacity = '.6'; }
+  }
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// MÓDULO CUOTAS — compras financiadas con seguimiento completo
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+let CUOTA_FILTER = 'Todas';
+let cuChartBanco = null, cuChartEvo = null;
+let interesOn = false;
+
+function toggleInteresSw() {
+  interesOn = !interesOn;
+  document.getElementById('f-cuota-interes-sw').classList.toggle('on', interesOn);
+}
+
+function calcCuotaValor() {
+  const total = parseInt(document.getElementById('f-cuota-total').value) || 0;
+  const monto = parseAmt(document.getElementById('f-cuota-monto-total').value) || 0;
+  if (total > 0 && monto > 0) {
+    const valor = (monto / total);
+    document.getElementById('f-cuota-valor').value = valor.toFixed(2).replace('.', ',');
+    const amtField = document.getElementById('f-amt');
+    if (!amtField.value.trim()) amtField.value = valor.toFixed(2).replace('.', ',');
+  }
+}
+
+function addMonths(dateStr, n) {
+  const d = new Date(dateStr + 'T00:00:00');
+  d.setMonth(d.getMonth() + n);
+  return d.toISOString().slice(0, 10);
+}
+
+function genCalendario({ totalCuotas, cuotaActualInicial, primerVencimiento, valorCuota, importeTotal }) {
+  const cal = [];
+  let acumulado = 0;
+  for (let n = 1; n <= totalCuotas; n++) {
+    const esUltima = n === totalCuotas;
+    const monto = esUltima ? Math.round((importeTotal - acumulado) * 100) / 100 : valorCuota;
+    acumulado += monto;
+    cal.push({ n, vence: addMonths(primerVencimiento, n - 1), monto, pagada: n < cuotaActualInicial });
+  }
+  return cal;
+}
+
+function createCompra({ desc, banco, cat, medio, c, totalCuotas, cuotaActualInicial, fechaCompra, primerVencimiento, importeTotal, valorCuota, conInteres }) {
+  const compra = {
+    id: Date.now(),
+    desc, banco, cat, medio, c,
+    totalCuotas, fechaCompra, importeTotal, valorCuota, conInteres,
+    cuotas: genCalendario({ totalCuotas, cuotaActualInicial, primerVencimiento, valorCuota, importeTotal })
+  };
+  compras.push(compra);
+  return compra;
+}
+
+function fmtDateShort(iso) {
+  const d = new Date(iso + 'T00:00:00');
+  return d.toLocaleDateString('es-AR', { day: '2-digit', month: 'short' });
+}
+
+function estadoCompra(compra) {
+  const pend = compra.cuotas.filter(c => !c.pagada);
+  if (!pend.length) return 'finalizada';
+  const hoy = new Date().toISOString().slice(0, 10);
+  if (pend[0].vence < hoy) return 'vencida';
+  return 'activa';
+}
+
+// ── Resumen / dashboard de cuotas ──
+function cuotasResumen() {
+  const hoyMo = getMonthPrefix(0);
+  let mesTotal = 0, pendientes = 0, activas = 0, terminanEsteMes = 0;
+  compras.forEach(compra => {
+    const pend = compra.cuotas.filter(c => !c.pagada);
+    pendientes += pend.length;
+    if (pend.length) activas++;
+    const delMes = compra.cuotas.find(c => c.vence.startsWith(hoyMo) && !c.pagada);
+    if (delMes) mesTotal += delMes.monto;
+    const ultima = compra.cuotas[compra.cuotas.length - 1];
+    if (ultima && !ultima.pagada && ultima.vence.startsWith(hoyMo)) terminanEsteMes++;
+  });
+  return { mesTotal, pendientes, activas, terminanEsteMes };
+}
+
+function renCuotaAlerts() {
+  const wrap = document.getElementById('cu-alerts');
+  if (!wrap) return;
+  wrap.innerHTML = '';
+  const hoy = new Date(); const hoyISO = hoy.toISOString().slice(0,10);
+  const en5 = new Date(hoy); en5.setDate(en5.getDate() + 5); const en5ISO = en5.toISOString().slice(0,10);
+  let vencenHoy = 0, vencenPronto = 0, finalizanEsteMes = 0;
+  const hoyMo = getMonthPrefix(0), proxMo = getMonthPrefix(1);
+  let liberanProxMes = 0;
+  compras.forEach(compra => {
+    compra.cuotas.forEach(c => {
+      if (c.pagada) return;
+      if (c.vence === hoyISO) vencenHoy++;
+      else if (c.vence > hoyISO && c.vence <= en5ISO) vencenPronto++;
+    });
+    const ultima = compra.cuotas[compra.cuotas.length - 1];
+    if (ultima && !ultima.pagada && ultima.vence.startsWith(hoyMo)) finalizanEsteMes++;
+    if (ultima && !ultima.pagada && ultima.vence.startsWith(proxMo)) liberanProxMes++;
+  });
+  if (vencenHoy > 0) wrap.innerHTML += `<div class="alert danger"><span class="alert-icon">⏰</span><div><strong>Hoy vence${vencenHoy>1?'n':''} ${vencenHoy} cuota${vencenHoy>1?'s':''}</strong>Revisá tu pestaña Cuotas para no pasarte de fecha.</div></div>`;
+  if (vencenPronto > 0) wrap.innerHTML += `<div class="alert warn"><span class="alert-icon">⚡</span><div><strong>${vencenPronto} cuota${vencenPronto>1?'s':''} vence${vencenPronto>1?'n':''} en los próximos 5 días</strong>Tené el monto disponible para evitar intereses.</div></div>`;
+  if (finalizanEsteMes > 0) wrap.innerHTML += `<div class="alert warn" style="background:rgba(74,222,128,.08);border-color:rgba(74,222,128,.25);color:var(--green)"><span class="alert-icon">🏁</span><div><strong>Este mes finalizan ${finalizanEsteMes} financiación${finalizanEsteMes>1?'es':''}</strong>¡Ya casi liberás ese monto mensual!</div></div>`;
+  if (liberanProxMes > 0) wrap.innerHTML += `<div class="alert" style="background:rgba(56,189,248,.08);border:0.5px solid rgba(56,189,248,.25);color:var(--accent)"><span class="alert-icon">📉</span><div><strong>El próximo mes bajan tus gastos fijos</strong>${liberanProxMes} compra${liberanProxMes>1?'s':''} en cuotas termina${liberanProxMes>1?'n':''} este mes.</div></div>`;
+}
+
+// ── Render pantalla Cuotas ──
+function renCuotas() {
+  const r = cuotasResumen();
+  document.getElementById('cu-mes-total').textContent = disp(r.mesTotal);
+  document.getElementById('cu-pendientes').textContent = r.pendientes;
+  document.getElementById('cu-activas').textContent = r.activas;
+  document.getElementById('cu-terminan').textContent = r.terminanEsteMes;
+  renCuotaAlerts();
+  renCuFilters();
+  renCuotasList();
+  renCuotasCharts();
+}
+
+function renCuFilters() {
+  const bancos = [...new Set(compras.map(c => c.banco).filter(Boolean))];
+  const filters = ['Todas', 'Activas', 'Finalizadas', 'Próximas a finalizar', ...bancos];
+  document.getElementById('cu-filters').innerHTML = filters.map(f =>
+    `<button class="fpill${CUOTA_FILTER===f?' on':''}" onclick="setCuFilter('${f.replace(/'/g,"\\'")}')">${f}</button>`
+  ).join('');
+}
+
+function setCuFilter(f) { CUOTA_FILTER = f; renCuFilters(); renCuotasList(); }
+
+function renCuotasList() {
+  const q = (document.getElementById('cu-q')?.value || '').toLowerCase();
+  const l = document.getElementById('cuotas-list'); l.innerHTML = '';
+
+  let arr = [...compras];
+  if (CUOTA_FILTER === 'Activas') arr = arr.filter(c => estadoCompra(c) !== 'finalizada');
+  else if (CUOTA_FILTER === 'Finalizadas') arr = arr.filter(c => estadoCompra(c) === 'finalizada');
+  else if (CUOTA_FILTER === 'Próximas a finalizar') arr = arr.filter(c => { const pend = c.cuotas.filter(x=>!x.pagada).length; return pend > 0 && pend <= 2; });
+  else if (CUOTA_FILTER !== 'Todas') arr = arr.filter(c => c.banco === CUOTA_FILTER);
+  if (q) arr = arr.filter(c => c.desc.toLowerCase().includes(q) || (c.banco||'').toLowerCase().includes(q));
+
+  arr.sort((a,b) => {
+    const pa = a.cuotas.find(x=>!x.pagada), pb = b.cuotas.find(x=>!x.pagada);
+    if (!pa && !pb) return 0; if (!pa) return 1; if (!pb) return -1;
+    return pa.vence.localeCompare(pb.vence);
+  });
+
+  if (!arr.length) {
+    l.innerHTML = `<div class="empty"><div class="empty-icon">💳</div><div class="empty-title">${compras.length ? 'Sin resultados' : 'Sin compras en cuotas'}</div><div class="empty-text">${compras.length ? 'Probá otro filtro o búsqueda' : 'Tocá "+ Compra" para registrar tu primera compra financiada'}</div></div>`;
+    return;
+  }
+
+  arr.forEach(compra => l.innerHTML += renCuotaCardHtml(compra));
+}
+
+function renCuotaCardHtml(compra) {
+  const pagadas = compra.cuotas.filter(c => c.pagada).length;
+  const total = compra.cuotas.length;
+  const pend = total - pagadas;
+  const pct = Math.round((pagadas/total) * 100);
+  const estado = estadoCompra(compra);
+  const proxima = compra.cuotas.find(c => !c.pagada);
+  return `<div class="cuota-card" onclick="openCuotaDetail(${compra.id})">
+    <div class="cuota-top">
+      <div>
+        <div class="cuota-merchant">${escHtml(compra.desc)}</div>
+        <div class="cuota-bank">💳 ${escHtml(compra.banco||'Sin especificar')}${compra.conInteres?' · <span style="color:var(--amber)">con interés</span>':''}</div>
+      </div>
+      <span class="cuota-state ${estado}">${estado === 'activa' ? 'Activa' : estado === 'finalizada' ? 'Finalizada' : 'Vencida'}</span>
+    </div>
+    <div class="cuota-mid">
+      <span class="cuota-amount">${fmtNative(compra.valorCuota, compra.c)}<span style="font-size:11px;color:var(--text2);font-weight:500"> /cuota</span></span>
+      <span class="cuota-count">${pagadas}/${total} pagadas</span>
+    </div>
+    <div class="cuota-bar"><div class="cuota-fill" style="width:${pct}%;background:${estado==='finalizada'?'var(--green)':estado==='vencida'?'var(--red)':'var(--accent)'}"></div></div>
+    <div class="cuota-bottom">
+      <span>${pend} cuota${pend!==1?'s':''} restante${pend!==1?'s':''}</span>
+      <span>${proxima ? `Próx. vencimiento: <strong>${fmtDateShort(proxima.vence)}</strong>` : '✅ Sin pendientes'}</span>
+    </div>
+  </div>`;
+}
+
+// ── Detalle / calendario ──
+let cuotaDetailId = null;
+
+function openCuotaDetail(id) {
+  cuotaDetailId = id;
+  const compra = compras.find(c => c.id === id); if (!compra) return;
+  document.getElementById('cd-title').textContent = compra.desc;
+  const pagadas = compra.cuotas.filter(c => c.pagada).length;
+  document.getElementById('cd-summary').innerHTML = `
+    <div class="cuota-bank" style="margin-bottom:8px">💳 ${escHtml(compra.banco||'')} · ${escHtml(compra.cat||'')}${compra.conInteres?' · con interés':' · sin interés'}</div>
+    <div class="cuota-bar"><div class="cuota-fill" style="width:${Math.round(pagadas/compra.cuotas.length*100)}%"></div></div>
+    <div class="cuota-bottom" style="margin-top:6px"><span>Total compra: <strong>${fmtNative(compra.importeTotal, compra.c)}</strong></span><span>${pagadas}/${compra.cuotas.length} pagadas</span></div>`;
+  document.getElementById('cd-list').innerHTML = compra.cuotas.map(c => {
+    const hoy = new Date().toISOString().slice(0,10);
+    const overdue = !c.pagada && c.vence < hoy;
+    return `<div class="installment-row">
+      <div class="inst-check ${c.pagada?'paid':''}" onclick="event.stopPropagation();toggleCuotaPaid(${compra.id},${c.n})">${c.pagada?'✓':''}</div>
+      <div class="inst-info"><div class="inst-num">Cuota ${c.n}/${compra.cuotas.length}</div><div class="inst-date">${overdue?'Venció el ':'Vence el '}${fmtDateShort(c.vence)}</div></div>
+      <div class="inst-amt ${overdue?'overdue':''}">${fmtNative(c.monto, compra.c)}</div>
+    </div>`;
+  }).join('');
+  document.getElementById('sheet-cuota-detail').classList.add('open');
+}
+
+function toggleCuotaPaid(compraId, n) {
+  const compra = compras.find(c => c.id === compraId); if (!compra) return;
+  const cuota = compra.cuotas.find(c => c.n === n); if (!cuota) return;
+  const pendientesAntes = compra.cuotas.filter(c => !c.pagada).length;
+  cuota.pagada = !cuota.pagada;
+  saveDB();
+  const pendientesDespues = compra.cuotas.filter(c => !c.pagada).length;
+
+  openCuotaDetail(compraId);
+  renCuotas();
+
+  // Celebraciones 🎉
+  if (cuota.pagada) {
+    if (pendientesDespues === 0) {
+      fireConfetti();
+      showNotif({ type:'good', emoji:'🎉', title:'¡Felicitaciones!',
+        body:`Terminaste de pagar tu compra de <strong>${escHtml(compra.desc)}</strong>.<br><br>Ya no tendrás más cuotas de este producto. Ese monto mensual queda libre para tus metas.`,
+        btnLabel:'¡Genial! 🏆' });
+    } else if (pendientesAntes - pendientesDespues === 1 && pendientesDespues <= Math.ceil(compra.cuotas.length * 0.25) && pendientesDespues > 0) {
+      fireConfetti(18);
+      showNotif({ type:'good', emoji:'🏆', title:'¡Excelente!',
+        body:`Acabás de liberar una cuota de <strong>${escHtml(compra.desc)}</strong>.<br><br>Te quedan solo ${pendientesDespues} cuota${pendientesDespues!==1?'s':''}. Cada paso te acerca a una economía más saludable.`,
+        btnLabel:'¡Seguimos! 💪' });
+    }
+  }
+}
+
+function confirmDelCompra() {
+  const compra = compras.find(c => c.id === cuotaDetailId); if (!compra) return;
+  closeSheet('cuota-detail');
+  confirmDel('compra', compra.id, compra.desc);
+}
+
+// ── Gráficos de cuotas ──
+function renCuotasCharts() {
+  // Distribución por banco
+  const bancoTotals = {};
+  compras.forEach(c => { const pend = c.cuotas.filter(x=>!x.pagada).length; if (pend) bancoTotals[c.banco||'Sin banco'] = (bancoTotals[c.banco||'Sin banco']||0) + pend * c.valorCuota; });
+  const bancos = Object.keys(bancoTotals);
+  const palette = ['#38bdf8','#4ade80','#fbbf24','#f87171','#a78bfa','#f472b6','#34d399','#60a5fa'];
+  if (cuChartBanco) { cuChartBanco.destroy(); cuChartBanco = null; }
+  const ctxB = document.getElementById('chart-banco');
+  if (ctxB) {
+    if (bancos.length) {
+      cuChartBanco = new Chart(ctxB.getContext('2d'), {
+        type: 'doughnut',
+        data: { labels: bancos, datasets: [{ data: bancos.map(b=>bancoTotals[b]), backgroundColor: bancos.map((_,i)=>palette[i%palette.length]), borderWidth: 0, hoverOffset: 4 }] },
+        options: { responsive: true, maintainAspectRatio: false, cutout: '68%', plugins: { legend: { display:false }, tooltip: { callbacks: { label: c => ' ' + bancos[c.dataIndex] + ': $' + Math.round(c.raw).toLocaleString('es-AR') } } } }
+      });
+    } else {
+      const ctx = ctxB.getContext('2d'); ctx.clearRect(0,0,ctxB.width,ctxB.height);
+    }
+  }
+  document.getElementById('cu-banco-legend').innerHTML = bancos.map((b,i) => `<span class="leg-item"><span class="leg-dot" style="background:${palette[i%palette.length]}"></span>${b}</span>`).join('');
+
+  // Evolución comprometido próximos 6 meses
+  if (cuChartEvo) { cuChartEvo.destroy(); cuChartEvo = null; }
+  const ctxE = document.getElementById('chart-evolucion');
+  if (ctxE) {
+    const labels = [], data = [];
+    for (let i = 0; i < 6; i++) {
+      const mo = getMonthPrefix(i);
+      const d = new Date(); d.setDate(1); d.setMonth(d.getMonth()+i);
+      labels.push(MONTHS[d.getMonth()].slice(0,3));
+      let sum = 0;
+      compras.forEach(c => c.cuotas.forEach(cu => { if (!cu.pagada && cu.vence.startsWith(mo)) sum += cu.monto; }));
+      data.push(Math.round(sum));
+    }
+    cuChartEvo = new Chart(ctxE.getContext('2d'), {
+      type: 'bar',
+      data: { labels, datasets: [{ data, backgroundColor: 'rgba(56,189,248,.7)', borderColor: '#38bdf8', borderWidth: 1, borderRadius: 5 }] },
+      options: { responsive:true, maintainAspectRatio:false, plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label: c => ' $' + c.raw.toLocaleString('es-AR') } } },
+        scales: { y:{ ticks:{ callback: v => '$'+(v/1000).toFixed(0)+'k', font:{size:11}, color:'#64748b' }, grid:{ color:'rgba(148,163,184,.08)' }, border:{display:false} }, x:{ ticks:{font:{size:11},color:'#64748b'}, grid:{display:false}, border:{display:false} } } }
+    });
+  }
+}
+
+// ── Abrir sheet de nueva compra (atajo desde la pantalla Cuotas) ──
+function openCompraSheet() {
+  openSheet('tx');
+  document.getElementById('f-medio').value = 'Tarjeta de crédito';
+  toggleCuotas();
+}
+
+// ── Confeti elegante ──
+function fireConfetti(n = 36) {
+  const layer = document.getElementById('confetti-layer'); if (!layer) return;
+  const colors = ['#38bdf8','#4ade80','#fbbf24','#f87171','#a78bfa','#f472b6'];
+  for (let i = 0; i < n; i++) {
+    const el = document.createElement('div');
+    el.className = 'confetti-piece';
+    const size = 6 + Math.random() * 6;
+    el.style.left = Math.random() * 100 + 'vw';
+    el.style.width = size + 'px';
+    el.style.height = (size * 0.4) + 'px';
+    el.style.background = colors[Math.floor(Math.random()*colors.length)];
+    el.style.animationDuration = (2.2 + Math.random() * 1.6) + 's';
+    el.style.animationDelay = (Math.random() * 0.4) + 's';
+    layer.appendChild(el);
+    setTimeout(() => el.remove(), 4500);
+  }
+}
+
+
 function renTxFilters() {
   const filters = ['Todos', ...CATS];
   document.getElementById('tx-filters').innerHTML = filters.map(f =>
@@ -1210,331 +1938,6 @@ function renBud() {
     else if (p >= .8) tip = `<div class="budget-tip" style="color:var(--amber)">⚡ Solo te quedan <strong>${disp(lim - sp)}</strong> en ${cat}.</div>`;
     l.innerHTML += `<div class="budget-item"><div class="budget-row"><span class="budget-cat">${ICONS[cat]||'📋'} ${cat}</span><span class="budget-pct" style="color:${p>=1?'var(--red)':p>=.8?'var(--amber)':'var(--text1)'}">${pn}%</span></div><div class="budget-amounts">Gastado: ${disp(sp)} &nbsp;|&nbsp; Límite: ${disp(lim)}</div><div class="pb"><div class="pf ${cls}" style="width:${pn}%"></div></div>${tip}</div>`;
   });
-}
-
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// RENDER CUOTAS — DASHBOARD DEL MÓDULO
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-let C_ACTIVE_FILTER = 'Todos';
-
-function renCuotas() {
-  // ── Tarjetas resumen ──
-  const delMes = cuotasDelMes(0);
-  const pagarEsteMes = delMes.filter(x => !x.cuota.pagada).reduce((s,x) => s + toARS(x.cuota.monto, x.compra.c), 0);
-  const pendientesTotal = compras.reduce((s,c) => s + c.cuotas.filter(cu => !cu.pagada).length, 0);
-  const activas = compras.filter(compraActiva).length;
-  const ultimaEsteMes = delMes.filter(x => x.cuota.n === x.compra.totalCuotas).length;
-
-  document.getElementById('c-mes-pagar').textContent = disp(pagarEsteMes);
-  document.getElementById('c-pendientes').textContent = pendientesTotal;
-  document.getElementById('c-activas').textContent = activas;
-  document.getElementById('c-ultima').textContent = ultimaEsteMes;
-
-  renCuotasAlerts();
-  renCuotasFilters();
-  renCuotasList();
-  renCuotasStats();
-  renCapacidad();
-}
-
-// ── Alertas / recordatorios ──
-function renCuotasAlerts() {
-  const el = document.getElementById('c-alerts'); el.innerHTML = '';
-  const hoy = new Date().toISOString().slice(0,10);
-  const en5 = addMonths(hoy, 0); // placeholder, calculamos por días abajo
-  const hoyD = new Date(hoy + 'T00:00:00');
-  const alerts = [];
-
-  let dueToday = 0, due5 = 0;
-  const finalizanEsteMes = compras.filter(c => {
-    const ultima = c.cuotas.find(cu => cu.n === c.totalCuotas);
-    return ultima && !ultima.pagada && ultima.venc.startsWith(getMonthPrefix(0));
-  }).length;
-
-  compras.forEach(compra => {
-    compra.cuotas.forEach(cu => {
-      if (cu.pagada) return;
-      const vD = new Date(cu.venc + 'T00:00:00');
-      const diffDays = Math.round((vD - hoyD) / 86400000);
-      if (diffDays === 0) dueToday++;
-      else if (diffDays > 0 && diffDays <= 5) due5++;
-    });
-  });
-
-  if (dueToday > 0) alerts.push({ cls:'danger', icon:'🔴', html:`Hoy vence <strong>${dueToday}</strong> cuota${dueToday>1?'s':''}.` });
-  if (due5 > 0) alerts.push({ cls:'warn', icon:'⏰', html:`Faltan 5 días o menos para <strong>${due5}</strong> vencimiento${due5>1?'s':''}.` });
-  if (finalizanEsteMes > 0) alerts.push({ cls:'warn', icon:'🏁', html:`Este mes finalizan <strong>${finalizanEsteMes}</strong> financiación${finalizanEsteMes>1?'es':''}.` });
-
-  // Próximo mes vs este mes (proyección de liberación de cuotas)
-  const esteMesTotal = cuotasDelMes(0).reduce((s,x)=>s+toARS(x.cuota.monto,x.compra.c),0);
-  const proxMesTotal  = cuotasDelMes(1).reduce((s,x)=>s+toARS(x.cuota.monto,x.compra.c),0);
-  if (esteMesTotal > 0 && proxMesTotal < esteMesTotal) {
-    alerts.push({ cls:'warn', icon:'📉', html:`El próximo mes vas a pagar <strong>${disp(esteMesTotal - proxMesTotal)}</strong> menos porque terminan algunas cuotas.` });
-  }
-
-  if (!alerts.length) return;
-  alerts.forEach(a => {
-    el.innerHTML += `<div class="alert ${a.cls}"><span class="alert-icon">${a.icon}</span><span>${a.html}</span></div>`;
-  });
-}
-
-// ── Filtros ──
-function renCuotasFilters() {
-  const bancos = new Set(compras.map(c => c.banco).filter(Boolean));
-  const opts = ['Todos', 'Activas', 'Finalizadas', 'Próximas a finalizar', ...bancos];
-  const el = document.getElementById('c-filters'); el.innerHTML = '';
-  opts.forEach(o => {
-    el.innerHTML += `<button class="fpill ${C_ACTIVE_FILTER===o?'on':''}" onclick="cFilter('${o.replace(/'/g,"\\'")}')">${o}</button>`;
-  });
-}
-function cFilter(o) { C_ACTIVE_FILTER = o; renCuotasFilters(); renCuotasList(); }
-
-// ── Lista de compras ──
-function renCuotasList() {
-  const q = (document.getElementById('c-q')?.value || '').toLowerCase();
-  const l = document.getElementById('c-list'); if (!l) return; l.innerHTML = '';
-
-  let list = compras.slice().sort((a,b) => {
-    const pa = proximoVenc(a), pb = proximoVenc(b);
-    if (!pa && !pb) return 0; if (!pa) return 1; if (!pb) return -1;
-    return pa.venc.localeCompare(pb.venc);
-  });
-
-  if (C_ACTIVE_FILTER === 'Activas') list = list.filter(compraActiva);
-  else if (C_ACTIVE_FILTER === 'Finalizadas') list = list.filter(c => !compraActiva(c));
-  else if (C_ACTIVE_FILTER === 'Próximas a finalizar') list = list.filter(c => { const {restantes} = compraProgress(c); return restantes > 0 && restantes <= 2; });
-  else if (C_ACTIVE_FILTER !== 'Todos') list = list.filter(c => c.banco === C_ACTIVE_FILTER);
-
-  if (q) list = list.filter(c => (c.desc+' '+c.banco).toLowerCase().includes(q));
-
-  if (!list.length) {
-    l.innerHTML = `<div class="empty"><div class="empty-icon">💳</div><div class="empty-title">Sin compras en cuotas</div><div class="empty-text">Registrá un gasto con "Tarjeta de crédito" y 2 o más cuotas para empezar el seguimiento.</div></div>`;
-    return;
-  }
-
-  list.forEach(compra => {
-    const { pagadas, restantes, pct } = compraProgress(compra);
-    const activa = compraActiva(compra);
-    const next = proximoVenc(compra);
-    const cls = pct >= 100 ? 'pok' : restantes <= 2 ? 'pwarn' : 'pok';
-    const badge = !activa ? '<span class="compra-badge finalizada">Finalizada</span>' : (restantes<=2 ? '<span class="compra-badge urgente">Por finalizar</span>' : '<span class="compra-badge activa">Activa</span>');
-    l.innerHTML += `<div class="card"><div class="compra-card" onclick="openCompraDetail(${compra.id})">
-      <div class="compra-top">
-        <div><div class="compra-title">${escHtml(compra.desc)}</div><div class="compra-sub">${escHtml(compra.banco||'—')} · ${escHtml(compra.cat||'Otro')}</div></div>
-        ${badge}
-      </div>
-      <div class="compra-meta-row"><span>Cuota: <strong>${fmtNative(compra.valorCuota, compra.c)}</strong></span><span>${pagadas}/${compra.totalCuotas} pagadas</span></div>
-      <div class="pb"><div class="pf ${cls}" style="width:${pct}%"></div></div>
-      <div class="compra-next">${next ? '📅 Próximo vencimiento: '+next.venc : '✅ Sin cuotas pendientes'}</div>
-    </div></div>`;
-  });
-}
-
-// ── Detalle de una compra + toggle de cuotas ──
-let currentCompraId = null;
-function openCompraDetail(id) {
-  currentCompraId = id;
-  const compra = getCompra(id); if (!compra) return;
-  const { pagadas, restantes, pct } = compraProgress(compra);
-  document.getElementById('compra-detail-title').textContent = compra.desc;
-  const body = document.getElementById('compra-detail-body');
-  const hoy = new Date().toISOString().slice(0,10);
-  body.innerHTML = `
-    <div class="compra-meta-row"><span>${escHtml(compra.banco||'—')} · ${escHtml(compra.cat||'Otro')}</span><span>${compra.interes ? 'Con interés' : 'Sin interés'}</span></div>
-    <div class="compra-meta-row"><span>Monto total</span><strong>${fmtNative(compra.importeTotal, compra.c)}</strong></div>
-    <div class="compra-meta-row"><span>Valor de cada cuota</span><strong>${fmtNative(compra.valorCuota, compra.c)}</strong></div>
-    <div class="pb" style="margin:10px 0"><div class="pf ${pct>=100?'pok':'pwarn'}" style="width:${pct}%"></div></div>
-    <div class="compra-meta-row" style="margin-bottom:16px"><span>${pagadas} pagadas</span><span>${restantes} restantes</span></div>
-    <div class="section-title" style="margin-top:0">Calendario de cuotas</div>
-    ${compra.cuotas.map(cu => {
-      const isDue = !cu.pagada && cu.venc <= hoy;
-      return `<div class="cuota-row" onclick="toggleCuotaPagada(${compra.id}, ${cu.n})">
-        <div class="cuota-row-left">
-          <div class="cuota-check ${cu.pagada?'on':isDue?'due':''}">${cu.pagada?'✓':cu.n}</div>
-          <div><div class="cuota-num">Cuota ${cu.n}/${compra.totalCuotas}</div><div class="cuota-venc">${cu.pagada ? 'Pagada · '+cu.venc : 'Vence '+cu.venc}</div></div>
-        </div>
-        <div class="cuota-amt">${fmtNative(cu.monto, compra.c)}</div>
-      </div>`;
-    }).join('')}
-  `;
-  document.getElementById('compra-del-btn').onclick = () => {
-    pendingDel = { type:'compra', id: compra.id };
-    document.getElementById('del-msg').innerHTML = `¿Eliminás el seguimiento de <strong>"${escHtml(compra.desc)}"</strong>? Esta acción no se puede deshacer.`;
-    document.getElementById('del-confirm-btn').onclick = execDel;
-    document.getElementById('sheet-del').classList.add('open');
-  };
-  document.getElementById('sheet-compra').classList.add('open');
-}
-
-// ── Tabs internos de Cuotas ──
-function cTab(tab, btn) {
-  document.querySelectorAll('#s-cuotas .tab').forEach(b => b.classList.remove('on'));
-  btn.classList.add('on');
-  document.getElementById('c-list-wrap').style.display  = tab === 'list'  ? 'block' : 'none';
-  document.getElementById('c-stats-wrap').style.display = tab === 'stats' ? 'block' : 'none';
-  document.getElementById('c-tools-wrap').style.display = tab === 'tools' ? 'block' : 'none';
-  if (tab === 'stats') renCuotasStats();
-  if (tab === 'tools') renCapacidad();
-}
-
-// ── Estadísticas ──
-let cTrendChart = null, cBancoChart = null, cRubroChart = null;
-function renCuotasStats() {
-  const canvasTrend = document.getElementById('cuotas-trend-chart');
-  if (!canvasTrend) return;
-
-  // Evolución de deuda en cuotas (próximos 6 meses)
-  const labels = [], pendPorMes = [];
-  for (let i = 0; i <= 5; i++) {
-    const d = new Date(); d.setDate(1); d.setMonth(d.getMonth() + i);
-    labels.push(MONTHS[d.getMonth()].slice(0,3));
-    pendPorMes.push(Math.round(cuotasDelMes(i).reduce((s,x)=>s+toARS(x.cuota.monto,x.compra.c),0)));
-  }
-  if (cTrendChart) cTrendChart.destroy();
-  cTrendChart = new Chart(canvasTrend.getContext('2d'), {
-    type: 'bar',
-    data: { labels, datasets: [{ label:'A pagar', data: pendPorMes, backgroundColor:'rgba(56,189,248,.7)', borderColor:'#38bdf8', borderWidth:1, borderRadius:5 }] },
-    options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>' $'+Math.round(c.raw).toLocaleString('es-AR')}}}, scales:{ y:{ticks:{callback:v=>'$'+(v/1000).toFixed(0)+'k',font:{size:11},color:'#64748b'},grid:{color:'rgba(148,163,184,.08)'},border:{display:false}}, x:{ticks:{font:{size:11},color:'#64748b'},grid:{display:false},border:{display:false}} } }
-  });
-
-  // Pagado vs pendiente
-  let pagado = 0, pendiente = 0;
-  compras.forEach(c => c.cuotas.forEach(cu => { const v = toARS(cu.monto, c.c); cu.pagada ? pagado += v : pendiente += v; }));
-  document.getElementById('c-pagado-pendiente').innerHTML = `
-    <div class="budget-item"><div class="budget-row"><span class="budget-cat">✅ Ya cancelado</span><span class="budget-pct" style="color:var(--green)">${disp(pagado)}</span></div></div>
-    <div class="budget-item"><div class="budget-row"><span class="budget-cat">⏳ Resta pagar</span><span class="budget-pct" style="color:var(--amber)">${disp(pendiente)}</span></div></div>`;
-
-  // Distribución por banco
-  const bancoTot = {};
-  compras.forEach(c => c.cuotas.filter(cu=>!cu.pagada).forEach(cu => { bancoTot[c.banco||'Otro'] = (bancoTot[c.banco||'Otro']||0) + toARS(cu.monto,c.c); }));
-  renderMiniDonut('cuotas-banco-chart', 'cuotas-banco-legend', bancoTot, () => cBancoChart, (ch)=>cBancoChart=ch);
-
-  // Distribución por rubro
-  const rubroTot = {};
-  compras.forEach(c => c.cuotas.filter(cu=>!cu.pagada).forEach(cu => { rubroTot[c.cat||'Otro'] = (rubroTot[c.cat||'Otro']||0) + toARS(cu.monto,c.c); }));
-  renderMiniDonut('cuotas-rubro-chart', 'cuotas-rubro-legend', rubroTot, () => cRubroChart, (ch)=>cRubroChart=ch);
-}
-
-function renderMiniDonut(canvasId, legendId, dataObj, getChart, setChart) {
-  const keys = Object.keys(dataObj);
-  const canvas = document.getElementById(canvasId); if (!canvas) return;
-  const existing = getChart(); if (existing) existing.destroy();
-  const tot = Object.values(dataObj).reduce((s,v)=>s+v,0);
-  const palette = ['#38bdf8','#4ade80','#fbbf24','#f87171','#a78bfa','#f472b6','#34d399','#e879f9','#facc15','#94a3b8'];
-  const cols = keys.map((_,i) => palette[i % palette.length]);
-  if (keys.length) {
-    const ch = new Chart(canvas.getContext('2d'), {
-      type:'doughnut',
-      data:{ labels:keys, datasets:[{ data:keys.map(k=>dataObj[k]), backgroundColor:cols, borderWidth:0, hoverOffset:4 }] },
-      options:{ responsive:true, maintainAspectRatio:false, cutout:'68%', plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>' '+keys[c.dataIndex]+': $'+Math.round(c.raw).toLocaleString('es-AR')}}} }
-    });
-    setChart(ch);
-  } else {
-    canvas.getContext('2d').clearRect(0,0,canvas.width,canvas.height);
-  }
-  document.getElementById(legendId).innerHTML = keys.map((k,i) => `<span class="leg-item"><span class="leg-dot" style="background:${cols[i]}"></span>${k} ${tot?Math.round(dataObj[k]/tot*100):0}%</span>`).join('') || '<span class="leg-item" style="color:var(--text2)">Sin datos pendientes</span>';
-}
-
-// ── Herramientas: capacidad de endeudamiento ──
-function renCapacidad() {
-  const el = document.getElementById('c-capacidad'); if (!el) return;
-  const ingresoProm = (() => {
-    let sum = 0, n = 0;
-    for (let i=-2;i<=0;i++){ const {inc} = totals(getMoTxs(i)); if (inc>0){ sum+=inc; n++; } }
-    return n ? sum/n : 0;
-  })();
-  const comprometidoMes = cuotasDelMes(0).filter(x=>!x.cuota.pagada).reduce((s,x)=>s+toARS(x.cuota.monto,x.compra.c),0);
-  const pct = ingresoProm ? Math.round(comprometidoMes/ingresoProm*100) : null;
-
-  let msg, color;
-  if (pct === null) { msg = 'Registrá ingresos para calcular tu capacidad de endeudamiento.'; color = 'var(--text1)'; }
-  else if (pct < 30) { msg = 'Tu nivel de endeudamiento es saludable. Tenés margen para nuevas compras si las necesitás.'; color = 'var(--green)'; }
-  else if (pct < 50) { msg = 'Tu nivel de endeudamiento es moderado. Evaluá bien antes de sumar nuevas cuotas.'; color = 'var(--amber)'; }
-  else { msg = 'Tu nivel de endeudamiento es alto. Te recomendamos evitar nuevas compras en cuotas por ahora.'; color = 'var(--red)'; }
-
-  el.innerHTML = `
-    <div class="compare-grid" style="margin-bottom:14px">
-      <div class="compare-cell"><div class="compare-label">Ingreso prom.</div><div class="compare-val neutral">${disp(ingresoProm)}</div></div>
-      <div class="compare-cell"><div class="compare-label">Comprometido</div><div class="compare-val neutral">${disp(comprometidoMes)}</div></div>
-      <div class="compare-cell"><div class="compare-label">% del ingreso</div><div class="compare-val" style="color:${color}">${pct!==null?pct+'%':'—'}</div></div>
-    </div>
-    <div class="result-box" style="color:${color}">${msg}</div>`;
-}
-
-function runSimulador() {
-  const monto = parseAmt(document.getElementById('sim-monto').value);
-  const cuotasN = parseInt(document.getElementById('sim-cuotas').value) || 0;
-  const out = document.getElementById('sim-resultado');
-  if (isNaN(monto) || monto <= 0 || cuotasN <= 0) { out.innerHTML = '<div class="result-box">Completá monto y cantidad de cuotas.</div>'; return; }
-  const valorCuota = monto / cuotasN;
-  const comprometidoActual = cuotasDelMes(0).filter(x=>!x.cuota.pagada).reduce((s,x)=>s+toARS(x.cuota.monto,x.compra.c),0);
-  const { inc } = totals(getMoTxs(0));
-  const nuevoTotal = comprometidoActual + valorCuota;
-  const pctIngreso = inc ? Math.round(nuevoTotal/inc*100) : null;
-  out.innerHTML = `<div class="result-box">
-    Cada cuota sería de <strong>${disp(valorCuota)}</strong>.<br>
-    Tu compromiso mensual pasaría de <strong>${disp(comprometidoActual)}</strong> a <strong>${disp(nuevoTotal)}</strong>.<br>
-    ${pctIngreso!==null ? `Eso representaría el <strong>${pctIngreso}%</strong> de tu ingreso mensual.` : 'Registrá ingresos para ver el % sobre tu sueldo.'}
-  </div>`;
-}
-
-function runComparador() {
-  const contado = parseAmt(document.getElementById('cmp-contado').value);
-  const financiado = parseAmt(document.getElementById('cmp-financiado').value);
-  const out = document.getElementById('cmp-resultado');
-  if (isNaN(contado) || isNaN(financiado) || contado<=0 || financiado<=0) { out.innerHTML = '<div class="result-box">Completá ambos precios.</div>'; return; }
-  const diff = financiado - contado;
-  const pct = Math.round(diff/contado*100);
-  out.innerHTML = diff <= 0
-    ? `<div class="result-box" style="color:var(--green)">Financiado te sale igual o más barato que contado — es la mejor opción si necesitás el flujo de caja.</div>`
-    : `<div class="result-box" style="color:var(--amber)">Financiar cuesta <strong>${disp(diff)}</strong> más que contado (<strong>+${pct}%</strong>). Si tenés el efectivo disponible y no afecta tu colchón, pagar contado te conviene.</div>`;
-}
-
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// CELEBRACIONES + CONFETI
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-function showCelebration({ emoji, title, body, btnLabel }) {
-  document.getElementById('celeb-emoji').textContent = emoji;
-  document.getElementById('celeb-title').textContent = title;
-  document.getElementById('celeb-body').innerHTML = body;
-  document.getElementById('celeb-btn').textContent = btnLabel;
-  document.getElementById('celeb-overlay').classList.add('open');
-}
-function closeCelebration() { document.getElementById('celeb-overlay').classList.remove('open'); }
-function celebBgClick(e) { if (e.target === document.getElementById('celeb-overlay')) closeCelebration(); }
-
-function launchConfetti(count = 120) {
-  const canvas = document.getElementById('confetti-canvas');
-  const dpr = window.devicePixelRatio || 1;
-  canvas.width = canvas.clientWidth * dpr; canvas.height = canvas.clientHeight * dpr;
-  const ctx = canvas.getContext('2d'); ctx.scale(dpr, dpr);
-  const colors = ['#38bdf8','#4ade80','#fbbf24','#f87171','#a78bfa','#f472b6'];
-  const pieces = Array.from({length: count}, () => ({
-    x: Math.random() * canvas.clientWidth,
-    y: -20 - Math.random() * 100,
-    r: 4 + Math.random() * 5,
-    c: colors[Math.floor(Math.random()*colors.length)],
-    vy: 2 + Math.random() * 3,
-    vx: -1.5 + Math.random() * 3,
-    rot: Math.random() * 360,
-    vr: -6 + Math.random() * 12
-  }));
-  let frame = 0;
-  function tick() {
-    frame++;
-    ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
-    let alive = false;
-    pieces.forEach(p => {
-      p.x += p.vx; p.y += p.vy; p.rot += p.vr;
-      if (p.y < canvas.clientHeight + 20) alive = true;
-      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot * Math.PI/180);
-      ctx.fillStyle = p.c; ctx.fillRect(-p.r/2, -p.r/2, p.r, p.r*0.6);
-      ctx.restore();
-    });
-    if (alive && frame < 240) requestAnimationFrame(tick);
-    else ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
-  }
-  requestAnimationFrame(tick);
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1680,6 +2083,11 @@ function sw(name, btn) {
   if (fn[name]) fn[name]();
 }
 
+function goToCuotas() {
+  const btn = [...document.querySelectorAll('.nb')].find(b => b.getAttribute('onclick') === "sw('cuotas',this)");
+  if (btn) sw('cuotas', btn);
+}
+
 function setCur(c, btn) {
   VIEW_CUR = c;
   document.querySelectorAll('.cur-btn').forEach(b => b.classList.remove('on'));
@@ -1721,13 +2129,15 @@ function openSheet(name) {
     document.getElementById('f-medio').value     = 'Efectivo';
     document.getElementById('f-date').value      = new Date().toISOString().slice(0, 10);
     document.getElementById('cuotas-section').style.display = 'none';
-    document.getElementById('f-cuota-actual').value      = '';
-    document.getElementById('f-cuota-total').value       = '';
-    document.getElementById('f-cuota-monto-total').value = '';
     document.getElementById('f-cuota-banco').value        = '';
+    document.getElementById('f-cuota-actual').value      = '1';
+    document.getElementById('f-cuota-total').value       = '';
+    document.getElementById('f-cuota-fecha-compra').value = new Date().toISOString().slice(0,10);
+    document.getElementById('f-cuota-primer-venc').value  = '';
+    document.getElementById('f-cuota-monto-total').value = '';
     document.getElementById('f-cuota-valor').value        = '';
-    document.getElementById('f-cuota-primer-venc').value  = new Date().toISOString().slice(0, 10);
-    document.getElementById('f-cuota-interes').checked    = false;
+    interesOn = false;
+    document.getElementById('f-cuota-interes-sw').classList.remove('on');
   }
   if (name === 'bud') {
     const f = document.getElementById('bud-fields'); f.innerHTML = '';
@@ -1755,14 +2165,6 @@ function toggleCuotas() {
   const medio = document.getElementById('f-medio').value;
   const show = ['Tarjeta de crédito','MercadoPago'].includes(medio);
   document.getElementById('cuotas-section').style.display = show ? 'block' : 'none';
-}
-
-function calcValorCuota() {
-  const total = parseInt(document.getElementById('f-cuota-total').value) || 0;
-  const montoTotal = parseAmt(document.getElementById('f-cuota-monto-total').value);
-  if (total > 0 && !isNaN(montoTotal) && montoTotal > 0) {
-    document.getElementById('f-cuota-valor').value = (montoTotal / total).toFixed(2).replace('.', ',');
-  }
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1804,35 +2206,30 @@ function saveTx() {
 
   // Datos de cuotas (solo si el panel está visible)
   let cuotas = null;
-  let nuevaCompra = null;
   const cuotasVisible = document.getElementById('cuotas-section').style.display !== 'none';
   if (cuotasVisible) {
-    const tipo        = document.getElementById('f-cuotas-tipo').value;
-    const banco       = document.getElementById('f-cuota-banco').value.trim();
-    const actual      = parseInt(document.getElementById('f-cuota-actual').value) || null;
-    const total       = parseInt(document.getElementById('f-cuota-total').value) || null;
-    const montoTotal  = parseAmt(document.getElementById('f-cuota-monto-total').value) || null;
-    let valorCuota    = parseAmt(document.getElementById('f-cuota-valor').value);
-    const primerVenc  = document.getElementById('f-cuota-primer-venc').value || d;
-    const interes     = document.getElementById('f-cuota-interes').checked;
-    if (isNaN(valorCuota) || valorCuota <= 0) valorCuota = (montoTotal && total) ? montoTotal / total : amt;
+    const banco        = document.getElementById('f-cuota-banco').value.trim();
+    const actual        = parseInt(document.getElementById('f-cuota-actual').value) || 1;
+    const total         = parseInt(document.getElementById('f-cuota-total').value) || null;
+    const fechaCompra    = document.getElementById('f-cuota-fecha-compra').value || d;
+    const primerVenc     = document.getElementById('f-cuota-primer-venc').value;
+    const montoTotal    = parseAmt(document.getElementById('f-cuota-monto-total').value) || null;
+    let valorCuota       = parseAmt(document.getElementById('f-cuota-valor').value) || null;
+    if (!valorCuota && montoTotal && total) valorCuota = Math.round((montoTotal/total)*100)/100;
 
-    if (actual && total) {
-      cuotas = { tipo, actual, total, montoTotal, banco, valorCuota, primerVenc, interes };
-      // Solo se crea un plan de seguimiento nuevo si son 2+ cuotas y no estamos editando una tx ya vinculada a una compra
-      if (total > 1 && montoTotal) {
-        nuevaCompra = addCompra({
-          desc, banco: banco || tipo, cat, totalCuotas: total,
-          fechaCompra: d, primerVenc, importeTotal: montoTotal,
-          valorCuota, interes, c, cuotaInicial: actual
-        });
+    if (actual && total) cuotas = { tipo: banco || medio, actual, total, montoTotal };
+
+    // Si hay datos suficientes, generamos la compra con calendario completo en el módulo Cuotas
+    if (total && primerVenc && montoTotal && valorCuota) {
+      const editId = document.getElementById('tx-edit-id').value;
+      if (!editId) {
+        createCompra({ desc, banco, cat, medio, c, totalCuotas: total, cuotaActualInicial: actual, fechaCompra, primerVencimiento: primerVenc, importeTotal: montoTotal, valorCuota, conInteres: interesOn });
       }
     }
   }
 
   const tx = { id: Date.now(), desc, amt, c, t, cat, medio, d };
   if (cuotas) tx.cuotas = cuotas;
-  if (nuevaCompra) tx.compraId = nuevaCompra.id;
 
   const editId = document.getElementById('tx-edit-id').value;
   if (editId) {
@@ -1841,8 +2238,11 @@ function saveTx() {
   } else {
     txs.push(tx);
   }
-  saveDB(); closeSheet('tx'); renTx(); renDash(); renBud();
-  if (nuevaCompra && document.getElementById('s-cuotas').classList.contains('active')) renCuotas();
+  const _isIncome = document.getElementById('f-type').value === 'income';
+  const _amt = parseAmt(document.getElementById('f-amt').value) || 0;
+  saveDB(); closeSheet('tx'); renTx(); renDash(); renBud(); renCuotas();
+  haptic([10, 30, 10]);
+  showToast(_isIncome ? `✅ Ingreso registrado: ${disp(_amt)}` : `💸 Gasto guardado correctamente`);
 }
 
 function editTx(id) {
@@ -1860,22 +2260,22 @@ function editTx(id) {
   const cuotasSection = document.getElementById('cuotas-section');
   if (tx.cuotas) {
     cuotasSection.style.display = 'block';
-    document.getElementById('f-cuotas-tipo').value        = tx.cuotas.tipo || 'Tarjeta de crédito';
-    document.getElementById('f-cuota-actual').value       = tx.cuotas.actual || '';
+    document.getElementById('f-cuota-banco').value        = tx.cuotas.tipo || '';
+    document.getElementById('f-cuota-actual').value       = tx.cuotas.actual || '1';
     document.getElementById('f-cuota-total').value        = tx.cuotas.total || '';
+    document.getElementById('f-cuota-fecha-compra').value = tx.d || '';
+    document.getElementById('f-cuota-primer-venc').value  = '';
     document.getElementById('f-cuota-monto-total').value  = tx.cuotas.montoTotal || '';
-    document.getElementById('f-cuota-banco').value        = tx.cuotas.banco || '';
-    document.getElementById('f-cuota-valor').value         = tx.cuotas.valorCuota ? String(tx.cuotas.valorCuota).replace('.',',') : '';
-    document.getElementById('f-cuota-primer-venc').value  = tx.cuotas.primerVenc || tx.d;
-    document.getElementById('f-cuota-interes').checked    = !!tx.cuotas.interes;
+    document.getElementById('f-cuota-valor').value        = '';
+    interesOn = false;
+    document.getElementById('f-cuota-interes-sw').classList.remove('on');
   } else {
     cuotasSection.style.display = 'none';
-    document.getElementById('f-cuota-actual').value       = '';
+    document.getElementById('f-cuota-banco').value        = '';
+    document.getElementById('f-cuota-actual').value       = '1';
     document.getElementById('f-cuota-total').value        = '';
     document.getElementById('f-cuota-monto-total').value  = '';
-    document.getElementById('f-cuota-banco').value        = '';
     document.getElementById('f-cuota-valor').value        = '';
-    document.getElementById('f-cuota-interes').checked    = false;
   }
   document.getElementById('sheet-tx').classList.add('open');
 }
@@ -1940,7 +2340,7 @@ function execDel() {
   if (!pendingDel) return;
   if (pendingDel.type === 'tx') { txs = txs.filter(t => t.id !== pendingDel.id); renTx(); renDash(); renBud(); }
   if (pendingDel.type === 'goal') { goals = goals.filter(g => g.id !== pendingDel.id); renGoals(); }
-  if (pendingDel.type === 'compra') { compras = compras.filter(c => c.id !== pendingDel.id); closeSheet('compra'); renCuotas(); }
+  if (pendingDel.type === 'compra') { compras = compras.filter(c => c.id !== pendingDel.id); renCuotas(); renDash(); }
   saveDB(); closeSheet('del'); pendingDel = null;
 }
 
@@ -2176,7 +2576,7 @@ function checkNowAndNotify() {
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 // ── Control de versión — evita que el caché muestre versiones viejas ──
-const APP_VERSION = '1.6.0';
+const APP_VERSION = '1.5.2';
 const storedVersion = localStorage.getItem('mf_version');
 if (storedVersion && storedVersion !== APP_VERSION) {
   // Hay una versión nueva — limpiar caché del service worker y recargar
@@ -2198,6 +2598,9 @@ if (storedVersion && storedVersion !== APP_VERSION) {
 showInstallBanner();
 renDash();
 analyzeAndNotify();
+initOnboarding();
+checkWrapped();
+initPushIfGranted();
 
 // Service Worker con versión en el nombre del caché
 if ('serviceWorker' in navigator) {
